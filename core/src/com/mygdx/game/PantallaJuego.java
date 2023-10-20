@@ -150,7 +150,7 @@ public class PantallaJuego implements Screen {
 	      //nivel completado
 	      if (balls1.size()==0) {
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+3, velYAsteroides+3, cantAsteroides+3);
+					velXAsteroides+1, velYAsteroides+1, cantAsteroides+2);
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();
