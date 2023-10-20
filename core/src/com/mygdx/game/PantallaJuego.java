@@ -27,7 +27,7 @@ public class PantallaJuego implements Screen {
 	private int cantAsteroides;
 	
 	private Nave4 nave;
-	private  ArrayList<Ball2> balls1 = new ArrayList<>();
+	private  ArrayList<Ball2> balls1 = new ArrayList<>();// Hay 2 arrayList para manejar las coliciones 
 	private  ArrayList<Ball2> balls2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
 
@@ -150,7 +150,7 @@ public class PantallaJuego implements Screen {
 	      //nivel completado
 	      if (balls1.size()==0) {
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+3, velYAsteroides+3, cantAsteroides+10);
+					velXAsteroides+3, velYAsteroides+3, cantAsteroides+3);
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();
