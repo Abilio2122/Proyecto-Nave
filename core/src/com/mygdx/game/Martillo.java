@@ -2,12 +2,22 @@ package com.mygdx.game;
 
 
 import java.util.Random;
-public class Martillo extends AbPowerUp {
+public class Martillo implements PowerUp{
+	private String name;
+	private int seg;
 	private int masVida;
 	
 	public Martillo(String name,int seg,int masVida) {
-		super(name,seg);
+		this.name = name;
+		this.seg = seg;
 		this.masVida = masVida;
+	}
+	public String getName() {
+		return name;
+	}
+	
+	public int getSeg() {
+		return seg;
 	}
 	
 	public int getMasVida() {

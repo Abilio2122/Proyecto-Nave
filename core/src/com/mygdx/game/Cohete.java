@@ -1,10 +1,13 @@
 package com.mygdx.game;
 
-public class Cohete extends AbPowerUp {
-private int disparos;
+public class Cohete implements PowerUp {
+	private String name;
+	private int seg;
+	private int disparos;
 	
 	public Cohete(String name,int seg,int disparos) {
-		super(name,seg);
+		this.name = name;
+		this.seg = seg;
 		this.disparos = disparos;
 	}
 	
