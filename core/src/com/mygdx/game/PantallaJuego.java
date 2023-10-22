@@ -46,11 +46,11 @@ public class PantallaJuego implements Screen {
 		camera.setToOrtho(false, 800, 640);
 		//inicializar assets; musica de fondo y efectos de sonido
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
-		explosionSound.setVolume(1,0.5f);
+		explosionSound.setVolume(1,0.25f);
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("noMeConoce.wav")); //
 		
 		gameMusic.setLooping(true);
-		gameMusic.setVolume(0.5f);
+		gameMusic.setVolume(0.75f);
 		gameMusic.play();
 		
 	    // cargar imagen de la nave, 64x64   
