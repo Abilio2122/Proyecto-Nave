@@ -33,6 +33,9 @@ public class NaveJugador extends NaveAbstract {
                 yVel *= -1;
 
             spr.setPosition(x + xVel, y + yVel);
+            
+            disparar(juego);
+            
             spr.draw(batch);
         } else {
             spr.setX(spr.getX() + MathUtils.random(-2, 2));
@@ -41,6 +44,7 @@ public class NaveJugador extends NaveAbstract {
             tiempoHerido--;
             if (tiempoHerido <= 0) herido = false;
         }
+        
     }
 
     @Override
@@ -54,6 +58,7 @@ public class NaveJugador extends NaveAbstract {
 
     public boolean checkCollision(Ball2 b) {
         if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())) {
+        	
             if (xVel == 0) xVel += b.getXSpeed() / 2;
             if (b.getXSpeed() == 0) b.setXSpeed(b.getXSpeed() + (int) xVel / 2);
             xVel = -xVel;
@@ -75,5 +80,5 @@ public class NaveJugador extends NaveAbstract {
         }
         return false;
     }
-
+    
 }
