@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 public interface PowerUp {
-	void aplicarPot(NaveAbstract nave);
+	void apply(NaveJugador nave);
 	
 	
 }

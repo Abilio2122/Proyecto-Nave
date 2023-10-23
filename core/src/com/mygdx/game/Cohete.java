@@ -16,7 +16,7 @@ public class Cohete implements PowerUp {
 	}
 	
 	
-	public void aplicarPot(NaveAbstract nave) {
+	public void apply(NaveJugador nave) {
 		
 	}
 }

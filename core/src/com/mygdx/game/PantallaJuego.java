@@ -30,7 +30,8 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();// Hay 2 arrayList para manejar las coliciones 
 	private  ArrayList<Ball2> balls2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
-
+	private  ArrayList<PowerUp> pot = new ArrayList<>();
+	
 
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides, int cantAsteroides) {
@@ -40,6 +41,15 @@ public class PantallaJuego implements Screen {
 		this.velXAsteroides = velXAsteroides;
 		this.velYAsteroides = velYAsteroides;
 		this.cantAsteroides = cantAsteroides;
+		
+		Martillo martillo = new Martillo("Martillo", 10, 20); // Nombre, segundos y salud adicionales
+		Cohete cohete = new Cohete("Cohete", 5, 3); // // Nombre, segundos y disparos adicionales
+		
+		pot.add(martillo);
+		pot.add(cohete);
+		
+		martillo.aplicarPot(nave);
+		cohete.aplicarPot(nave);
 		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	

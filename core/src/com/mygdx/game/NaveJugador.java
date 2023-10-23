@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
 public class NaveJugador extends NaveAbstract {
-
+	private boolean invulnerable = false;
     public NaveJugador(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
         super(3, 0, 0, tx, soundChoque, txBala, soundBala);
         spr = new Sprite(tx);
@@ -79,6 +79,14 @@ public class NaveJugador extends NaveAbstract {
             return true;
         }
         return false;
+    }
+    
+    public boolean getInvulnerable() {
+    	return invulnerable;
+    }
+    
+    public void setInvulnerable(boolean invulnerable) {
+    	this.invulnerable = invulnerable;
     }
     
 }
