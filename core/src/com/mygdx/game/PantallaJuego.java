@@ -48,8 +48,8 @@ public class PantallaJuego implements Screen {
 		pot.add(martillo);
 		pot.add(cohete);
 		
-		martillo.aplicarPot(nave);
-		cohete.aplicarPot(nave);
+		martillo.apply(nave);
+		cohete.apply(nave);
 		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
