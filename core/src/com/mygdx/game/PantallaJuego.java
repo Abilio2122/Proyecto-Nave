@@ -32,7 +32,7 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<Bullet> balas = new ArrayList<>();
 	private  ArrayList<PowerUp> pot = new ArrayList<>();
 	
-
+	
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides, int cantAsteroides) {
 		this.game = game;
@@ -42,14 +42,6 @@ public class PantallaJuego implements Screen {
 		this.velYAsteroides = velYAsteroides;
 		this.cantAsteroides = cantAsteroides;
 		
-		Martillo martillo = new Martillo("Martillo", 10, 20); // Nombre, segundos y salud adicionales
-		Cohete cohete = new Cohete("Cohete", 5, 3); // // Nombre, segundos y disparos adicionales
-		
-		pot.add(martillo);
-		pot.add(cohete);
-		
-		martillo.apply(nave);
-		cohete.apply(nave);
 		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
@@ -69,6 +61,15 @@ public class PantallaJuego implements Screen {
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
 	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
         nave.setVidas(vidas);
+        Martillo martillo = new Martillo("Martillo", 10, 20); // Nombre, segundos y salud adicionales
+		Cohete cohete = new Cohete("Cohete", 5, 3); // // Nombre, segundos y disparos adicionales
+		
+		pot.add(martillo);
+		pot.add(cohete);
+		
+		martillo.apply(nave);
+		cohete.apply(nave);
+        
         //crear asteroides
         Random r = new Random();
 	    for (int i = 0; i < cantAsteroides; i++) {
