@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 
 public class NaveJugador extends NaveAbstract {
 	private boolean invulnerable = false;
@@ -59,16 +62,20 @@ public class NaveJugador extends NaveAbstract {
     public boolean checkCollision(Ball2 b) {
         if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())) {
         	
+        	// cambia la direccion de movimiento por colision entre nave y ball2
             if (xVel == 0) xVel += b.getXSpeed() / 2;
             if (b.getXSpeed() == 0) b.setXSpeed(b.getXSpeed() + (int) xVel / 2);
+            //se invierten las direcciones entre ambos
             xVel = -xVel;
             b.setXSpeed(-b.getXSpeed());
-
+            
+            //lo mismo pero en vertical
             if (yVel == 0) yVel += b.getySpeed() / 2;
             if (b.getySpeed() == 0) b.setySpeed(b.getySpeed() + (int) yVel / 2);
             yVel = -yVel;
             b.setySpeed(-b.getySpeed());
-
+            
+            //consecuencias de la nave
             vidas--;
             herido = true;
             tiempoHerido = tiempoHeridoMax;
@@ -81,12 +88,35 @@ public class NaveJugador extends NaveAbstract {
         return false;
     }
     
+    /*
+    public boolean checkCollisionBala(Bullet bala) {
+    	if (!herido && bala.getArea().overlaps(spr.getBoundingRectangle())) {
+    		
+    	}
+    }
+    
+    public void verificarColisionesConBalas(ArrayList<Bullet> balas) {
+        for (int i = 0; i < balas.size(); i++) {
+            Bullet bala = balas.get(i);
+            if (checkCollisionBala(bala)) {
+                // La bala colisionó con la nave del jugador
+                balas.remove(i);
+                i--;
+                // Lógica adicional, como reducir vidas del jugador, reproducir sonidos, etc.
+            }
+        }
+    }
+    */
     public boolean getInvulnerable() {
     	return invulnerable;
     }
     
     public void setInvulnerable(boolean invulnerable) {
     	this.invulnerable = invulnerable;
+    }
+    
+    public Rectangle getArea() {
+    	return spr.getBoundingRectangle();
     }
     
 }

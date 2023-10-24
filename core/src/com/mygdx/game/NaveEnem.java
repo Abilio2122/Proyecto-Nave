@@ -16,7 +16,7 @@ public class NaveEnem extends NaveAbstract {
         spr = new Sprite(tx);
         spr.setPosition(x, y);
         spr.setBounds(x, y, 45, 45);
-        disparoIntervalo = 4.0f; // Intervalo de disparo en segundos
+        disparoIntervalo = 2.0f; // Intervalo de disparo en segundos
         // Inicializar la velocidad horizontal
         xSpeed = 2.0f; // Ajusta la velocidad según tus necesidades
     }

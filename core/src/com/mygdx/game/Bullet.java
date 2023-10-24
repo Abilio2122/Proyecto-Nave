@@ -44,6 +44,18 @@ public class Bullet {
 	        return false;
 	    }
 	    
+	    public boolean checkCollisionNave(NaveJugador nave) {
+	        if(spr.getBoundingRectangle().overlaps(nave.getArea())){
+	        	this.destroyed = true;
+	        	int vidas=nave.getVidas();
+	        	vidas--;
+	        	nave.setVidas(vidas);
+	            if (vidas <= 0)
+	                nave.destruida = true;
+	        }
+	        return false;
+	    }
+	    
 	    public boolean isDestroyed() {return destroyed;}
 	
 }

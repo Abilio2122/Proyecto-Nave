@@ -49,6 +49,7 @@ public class Ball2 {
     	spr.draw(batch);
     }
     
+    //colision entre asteroides
     public void checkCollision(Ball2 b2) {
         if(spr.getBoundingRectangle().overlaps(b2.spr.getBoundingRectangle())){
         	// rebote
