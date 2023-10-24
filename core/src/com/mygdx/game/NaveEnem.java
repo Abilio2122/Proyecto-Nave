@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 public class NaveEnem extends NaveAbstract {
 	
 	private float xSpeed;
+	private NaveJugador Nave;
 	
     public NaveEnem(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
         super(1, 0, 0, tx, soundChoque, txBala, soundBala);
@@ -67,7 +68,7 @@ public class NaveEnem extends NaveAbstract {
 
     @Override
     public void disparar(PantallaJuego juego) {
-        Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, -3, txBala);
+        Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, -3, txBala, Nave);
         juego.agregarBala(bala);
         soundBala.play();
     }

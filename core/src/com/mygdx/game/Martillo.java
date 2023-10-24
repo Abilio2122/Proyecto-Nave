@@ -8,6 +8,8 @@ public class Martillo implements PowerUp{
 	private String name;
 	private int seg;
 	private int masVida;
+	private int xSpeed;
+	private int ySpeed;
 	
 	public Martillo(String name,int seg,int masVida) {
 		this.name = name;
@@ -34,7 +36,7 @@ public class Martillo implements PowerUp{
 			nave.setVidas(Math.min(3, vidaAct + vidasFaltantes));
 		}
 		
-		nave.setInvulnerable(true);
+		//nave.setInvulnerable(true);
 		long tiempoActual = System.currentTimeMillis();
 
         // Calcular el tiempo en el que se desactivará la invulnerabilidad (5 segundos después)
@@ -46,7 +48,20 @@ public class Martillo implements PowerUp{
         }
 
         // Desactivar la invulnerabilidad
-        nave.setInvulnerable(false);
+        //nave.setInvulnerable(false);
 		
 	}
+	
+	public void setXSpeed(int xSpeed) {
+		// TODO Auto-generated method stub
+		this.xSpeed = xSpeed;
+	}
+	
+	public void setySpeed(int ySpeed) {
+		// TODO Auto-generated method stub
+		this.ySpeed = ySpeed;
+	}
+
+	
 }
+

@@ -23,6 +23,8 @@ public class NaveOriginal {
     private boolean herido = false;
     private int tiempoHeridoMax=50;
     private int tiempoHerido;
+    
+    private NaveJugador Nave;
 
     public NaveOriginal(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
     	sonidoHerido = soundChoque;
@@ -76,7 +78,7 @@ public class NaveOriginal {
  		 }
         // disparo
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
-          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight()-5,0,3,txBala);
+          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight()-5,0,3,txBala, Nave); //El Nave es para que no de error nada más
 	      juego.agregarBala(bala);
 	      soundBala.play();
         }

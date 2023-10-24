@@ -12,12 +12,15 @@ public class Bullet {
 	private int ySpeed;
 	private boolean destroyed = false;
 	private Sprite spr;
-	    
-	    public Bullet(float x, float y, int xSpeed, int ySpeed, Texture tx) {
+	private NaveJugador Nave;
+	
+	    public Bullet(float x, float y, int xSpeed, int ySpeed, Texture tx, NaveJugador nave) {
 	    	spr = new Sprite(tx);
 	    	spr.setPosition(x, y);
 	        this.xSpeed = xSpeed;
 	        this.ySpeed = ySpeed;
+	        this.Nave = nave;
+	        
 	    }
 	    public void update() {
 	        spr.setPosition(spr.getX()+xSpeed, spr.getY()+ySpeed);
@@ -55,6 +58,25 @@ public class Bullet {
 	        }
 	        return false;
 	    }
+	    
+	    public boolean checkCollision(EscudoProtector b2) {
+	        if(spr.getBoundingRectangle().overlaps(b2.getArea())&& Nave!= null){
+	        	// Se destruyen ambos
+	            this.destroyed = true;
+	            
+	         // Aplicar el efecto del EscudoProtector en la nave
+	            Nave.aplicarEscudoProtector(b2);
+	            
+	            
+	            // Cambiar la textura de la nave a la versión con escudo
+	            Nave.setNaveTexturaConEscudo();
+	            return true;
+	            
+	
+	        }
+	        return false;
+	    }
+	    
 	    
 	    public boolean isDestroyed() {return destroyed;}
 	

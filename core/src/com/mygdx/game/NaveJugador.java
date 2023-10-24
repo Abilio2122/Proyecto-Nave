@@ -13,6 +13,10 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class NaveJugador extends NaveAbstract {
 	private boolean invulnerable = false;
+	private boolean escudoActivo = false;
+	private Texture texturaSinEscudo = new Texture(Gdx.files.internal("MainShip3.png"));
+	private Texture texturaConEscudo = new Texture(Gdx.files.internal("MainShip4.png"));
+	
     public NaveJugador(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
         super(3, 0, 0, tx, soundChoque, txBala, soundBala);
         spr = new Sprite(tx);
@@ -53,7 +57,7 @@ public class NaveJugador extends NaveAbstract {
     @Override
     public void disparar(PantallaJuego juego) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
+            Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala, this);
             juego.agregarBala(bala);
             soundBala.play();
         }
@@ -76,16 +80,59 @@ public class NaveJugador extends NaveAbstract {
             b.setySpeed(-b.getySpeed());
             
             //consecuencias de la nave
-            vidas--;
-            herido = true;
-            tiempoHerido = tiempoHeridoMax;
-            sonidoHerido.play();
-
+            if(tieneEscudoActivo()== false) {
+            	vidas--;
+            	herido = true;
+            	tiempoHerido = tiempoHeridoMax;
+            	sonidoHerido.play();
+            }else {
+            	desactivarEscudo();
+            	spr.setTexture(texturaSinEscudo);
+            }
             if (vidas <= 0)
                 destruida = true;
             return true;
         }
+     
         return false;
+    }
+    
+    public boolean checkCollisione(EscudoProtector e) {
+        if(e.getArea().overlaps(spr.getBoundingRectangle())){
+        	// rebote
+            if (xVel ==0) xVel += e.getXSpeed()/2;
+            if (e.getXSpeed() ==0) e.setXSpeed(e.getXSpeed() + (int)xVel/2);
+            xVel = - xVel;
+            e.setXSpeed(-e.getXSpeed());
+            
+            if (yVel ==0) yVel += e.getySpeed()/2;
+            if (e.getySpeed() ==0) e.setySpeed(e.getySpeed() + (int)yVel/2);
+            yVel = - yVel;
+            e.setySpeed(- e.getySpeed());
+            
+            aplicarEscudoProtector(e);
+            spr.setTexture(texturaConEscudo);
+            return true;
+        }
+        
+        return false;
+    }
+    
+	public void aplicarEscudoProtector(EscudoProtector escudoProtector) {
+		escudoActivo = true;
+		
+	}
+	
+    public void desactivarEscudo() {
+        escudoActivo = false;
+    }
+    
+    public boolean tieneEscudoActivo() {
+        return escudoActivo;
+    }
+    
+    public void setNaveTexturaConEscudo() {
+        spr.setTexture(texturaConEscudo);
     }
     
     /*
@@ -107,6 +154,8 @@ public class NaveJugador extends NaveAbstract {
         }
     }
     */
+    
+    /*
     public boolean getInvulnerable() {
     	return invulnerable;
     }
@@ -114,6 +163,8 @@ public class NaveJugador extends NaveAbstract {
     public void setInvulnerable(boolean invulnerable) {
     	this.invulnerable = invulnerable;
     }
+    */
+    
     
     public Rectangle getArea() {
     	return spr.getBoundingRectangle();

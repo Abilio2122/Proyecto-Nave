@@ -28,25 +28,37 @@ public class PantallaJuego implements Screen {
 	private int cantAsteroides;
 	private NaveEnem naveEnem;
 	private NaveJugador nave;
+	
+	private int velXEscudo; 
+	private int velYEscudo; 
+	private int cantEscudo;
+	
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();// Hay 2 arrayList para manejar las coliciones 
 	private  ArrayList<Ball2> balls2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
-	private  ArrayList<PowerUp> pot = new ArrayList<>();
 	
+	//private  ArrayList<PowerUp> potenciador = new ArrayList<>();
+	
+	private  ArrayList<EscudoProtector> escudo1 = new ArrayList<>();
+	private  ArrayList<EscudoProtector> escudo2 = new ArrayList<>();
 	
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
-			int velXAsteroides, int velYAsteroides, int cantAsteroides) {
+			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo, int cantAsteroides) {
 		this.game = game;
 		this.ronda = ronda;
 		this.score = score;
 		this.velXAsteroides = velXAsteroides;
 		this.velYAsteroides = velYAsteroides;
 		this.cantAsteroides = cantAsteroides;
+		this.velXEscudo=velXEscudo;
+		this.velYEscudo=velYEscudo;
+		this.cantEscudo=cantEscudo;
 		
 		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
 		camera.setToOrtho(false, 800, 640);
+		
 		//inicializar assets; musica de fondo y efectos de sonido
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 		explosionSound.setVolume(1,0.25f);
@@ -66,6 +78,8 @@ public class PantallaJuego implements Screen {
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
 	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
         nave.setVidas(vidas);
+        
+        /*
         Martillo martillo = new Martillo("Martillo", 10, 20); // Nombre, segundos y salud adicionales
 		Cohete cohete = new Cohete("Cohete", 5, 3); // // Nombre, segundos y disparos adicionales
 		
@@ -74,7 +88,7 @@ public class PantallaJuego implements Screen {
 		
 		martillo.apply(nave);
 		cohete.apply(nave);
-        
+        */
 		
 		//crear NaveEnem
 		naveEnem = new NaveEnem(Gdx.graphics.getWidth()/2-50,600,new Texture(Gdx.files.internal("NaveMala.png")),
@@ -92,6 +106,17 @@ public class PantallaJuego implements Screen {
 	  	            new Texture(Gdx.files.internal("aGreyMedium4.png")));	   
 	  	    balls1.add(bb);
 	  	    balls2.add(bb);
+	  	}
+	    
+	    //Crear Escudos
+	    Random e = new Random();
+	    for (int i = 0; i < cantEscudo; i++) {
+	        EscudoProtector bb = new EscudoProtector(e.nextInt((int)Gdx.graphics.getWidth()),
+	  	            150+e.nextInt((int)Gdx.graphics.getHeight()-80),
+	  	            50+e.nextInt(10), velXEscudo+r.nextInt(4), velYEscudo+r.nextInt(4), 
+	  	            new Texture(Gdx.files.internal("escudo.png")));	   
+	        escudo1.add(bb);
+	        escudo2.add(bb);
 	  	}
 	}
     
@@ -127,11 +152,15 @@ public class PantallaJuego implements Screen {
 		              }
 		  	        }
 		            
+		            
+		            /*        
 		          //manejo de colision con nave
 		            if(b.checkCollisionNave(nave)) {
 		            	 herida.play();   // no se por que no suena
 		            }
-		                
+		            */    
+		            
+		            
 		         //   b.draw(batch);
 		            if (b.isDestroyed()) {
 		                balas.remove(b);
@@ -143,6 +172,29 @@ public class PantallaJuego implements Screen {
 		      for (Ball2 ball : balls1) {
 		          ball.update();
 		      }
+		      
+		      for (int i=0;i<escudo1.size();i++) {
+		    	  escudo1.get(i).update();
+		      }
+		      
+		      //interaccion bala con escudos
+	    	  for (int i = 0; i < balas.size(); i++) {
+		            Bullet b = balas.get(i);
+		            b.update();
+		            for (int j = 0; j < escudo1.size(); j++) {    
+		              if (b.checkCollision(escudo1.get(j))) {          
+		            	 escudo1.remove(j);
+		            	 escudo2.remove(j);
+		            	 j--;
+		            	 score +=10;
+		              }   	  
+		  	        }   
+		            if (b.isDestroyed()) {
+		                balas.remove(b);
+		                i--; 
+		            }
+		      }
+		      
 		      //colisiones entre asteroides y sus rebotes  
 		      for (int i=0;i<balls1.size();i++) {
 		    	Ball2 ball1 = balls1.get(i);   
@@ -154,25 +206,55 @@ public class PantallaJuego implements Screen {
 		          }
 		        }
 		      } 
+		      
+		      //Colision entre escudos
+		      
+		      for (int i=0;i<escudo1.size();i++) {
+			    	EscudoProtector e1 = escudo1.get(i);   
+			        for (int j=0;j<escudo2.size();j++) {
+			        	EscudoProtector e2 = escudo2.get(j); 
+			          if (i<j) {
+			        	  e1.checkCollision(e2);
+			     
+			          }
+			        }
+			      }
 	      }
+	      
 	      //dibujar balas
 	     for (Bullet b : balas) {       
 	          b.draw(batch);
 	      }
 	      nave.draw(batch, this);
-	      naveEnem.draw(batch, this);
+	      
+	      //naveEnem.draw(batch, this);
+	      
 	      //dibujar asteroides y manejar colision con nave
 	      for (int i = 0; i < balls1.size(); i++) {
 	    	    Ball2 b=balls1.get(i);
 	    	    b.draw(batch);
 		          //perdió vida o game over
-	              if (((NaveJugador) nave).checkCollision(b)) {
+	              if (nave.checkCollision(b)) {
 		            //asteroide se destruye con el choque             
 	            	 balls1.remove(i);
 	            	 balls2.remove(i);
 	            	 i--;
               }   	  
   	        }
+	      
+	      //nave choca con escudo
+	      for (int i = 0; i < escudo1.size(); i++) {
+	    	    EscudoProtector b=escudo1.get(i);
+	    	    b.draw(batch,this);
+		          
+	              if (nave.checkCollisione(b)) {
+		            //asteroide se destruye con el choque             
+	            	  escudo1.remove(i);
+	            	  escudo2.remove(i);
+	            	 i--;
+	              }   	  
+	     }
+	      
 	      
 	      if (nave.estaDestruido()) {
   			if (score > game.getHighScore())
@@ -186,7 +268,7 @@ public class PantallaJuego implements Screen {
 	      //nivel completado
 	      if (balls1.size()==0) {
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+1, velYAsteroides+1, cantAsteroides+2);
+					velXAsteroides+1, velYAsteroides+1,velXEscudo,velYEscudo,cantEscudo, cantAsteroides+2);
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();
