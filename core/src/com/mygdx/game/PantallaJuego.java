@@ -32,18 +32,18 @@ public class PantallaJuego implements Screen {
 	private int velXEscudo; 
 	private int velYEscudo; 
 	private int cantEscudo;
+	private EscudoProtector p;
+	boolean escudoA;
 	
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();// Hay 2 arrayList para manejar las coliciones 
 	private  ArrayList<Ball2> balls2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
 	
-	//private  ArrayList<PowerUp> potenciador = new ArrayList<>();
-	
 	private  ArrayList<EscudoProtector> escudo1 = new ArrayList<>();
 	private  ArrayList<EscudoProtector> escudo2 = new ArrayList<>();
 	
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
-			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo, int cantAsteroides) {
+			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo, int cantAsteroides, boolean escudoA) {
 		this.game = game;
 		this.ronda = ronda;
 		this.score = score;
@@ -76,19 +76,17 @@ public class PantallaJuego implements Screen {
 	    nave = new NaveJugador(Gdx.graphics.getWidth()/2-50,30,new Texture(Gdx.files.internal("MainShip3.png")),
 	    				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
-	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
+	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
+	    
+	    //Ve si tiene el escudo activo
+	    
+	    if(escudoA) {
+	        nave.aplicarEscudoProtector(p);
+	    	nave.setNaveTexturaConEscudo();
+	    }
+	    
         nave.setVidas(vidas);
         
-        /*
-        Martillo martillo = new Martillo("Martillo", 10, 20); // Nombre, segundos y salud adicionales
-		Cohete cohete = new Cohete("Cohete", 5, 3); // // Nombre, segundos y disparos adicionales
-		
-		pot.add(martillo);
-		pot.add(cohete);
-		
-		martillo.apply(nave);
-		cohete.apply(nave);
-        */
 		
 		//crear NaveEnem
 		naveEnem = new NaveEnem(Gdx.graphics.getWidth()/2-50,600,new Texture(Gdx.files.internal("NaveMala.png")),
@@ -268,7 +266,7 @@ public class PantallaJuego implements Screen {
 	      //nivel completado
 	      if (balls1.size()==0) {
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+1, velYAsteroides+1,velXEscudo,velYEscudo,cantEscudo, cantAsteroides+2);
+					velXAsteroides+1, velYAsteroides+1,velXEscudo,velYEscudo,cantEscudo, cantAsteroides+2,nave.tieneEscudoActivo());
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();

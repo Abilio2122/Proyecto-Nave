@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 public class NaveJugador extends NaveAbstract {
-	private boolean invulnerable = false;
 	private boolean escudoActivo = false;
 	private Texture texturaSinEscudo = new Texture(Gdx.files.internal("MainShip3.png"));
 	private Texture texturaConEscudo = new Texture(Gdx.files.internal("MainShip4.png"));
@@ -155,15 +154,6 @@ public class NaveJugador extends NaveAbstract {
     }
     */
     
-    /*
-    public boolean getInvulnerable() {
-    	return invulnerable;
-    }
-    
-    public void setInvulnerable(boolean invulnerable) {
-    	this.invulnerable = invulnerable;
-    }
-    */
     
     
     public Rectangle getArea() {
