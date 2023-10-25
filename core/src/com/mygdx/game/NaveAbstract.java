@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 	public abstract class NaveAbstract {
 		protected boolean destruida = false;
@@ -59,5 +60,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 	    public void setVidas(int vidas2) {
 	        vidas = vidas2;
 	    }
-
+	    
+	    public Rectangle getArea() {
+	    	return spr.getBoundingRectangle();
+		}
 }

@@ -56,7 +56,8 @@ public class NaveJugador extends NaveAbstract {
     @Override
     public void disparar(PantallaJuego juego) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala, this);
+            Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
+            bala.setBalaFromNave();
             juego.agregarBala(bala);
             soundBala.play();
         }
@@ -134,30 +135,8 @@ public class NaveJugador extends NaveAbstract {
         spr.setTexture(texturaConEscudo);
     }
     
-    /*
-    public boolean checkCollisionBala(Bullet bala) {
-    	if (!herido && bala.getArea().overlaps(spr.getBoundingRectangle())) {
-    		
-    	}
-    }
-    
-    public void verificarColisionesConBalas(ArrayList<Bullet> balas) {
-        for (int i = 0; i < balas.size(); i++) {
-            Bullet bala = balas.get(i);
-            if (checkCollisionBala(bala)) {
-                // La bala colisionó con la nave del jugador
-                balas.remove(i);
-                i--;
-                // Lógica adicional, como reducir vidas del jugador, reproducir sonidos, etc.
-            }
-        }
-    }
-    */
     
     
     
-    public Rectangle getArea() {
-    	return spr.getBoundingRectangle();
-    }
     
 }

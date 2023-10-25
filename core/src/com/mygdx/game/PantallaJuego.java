@@ -93,7 +93,7 @@ public class PantallaJuego implements Screen {
 				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
 				new Texture(Gdx.files.internal("Rocket2.png")), 
 				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
-		naveEnem.setVidas(vidas);
+		naveEnem.setVidas(2);
 		
         //crear asteroides
         Random r = new Random();
@@ -120,8 +120,10 @@ public class PantallaJuego implements Screen {
     
 	public void dibujaEncabezado() {
 		CharSequence str = "Vidas: "+nave.getVidas()+" Ronda: "+ronda;
+		CharSequence str2 = "Vidas: "+naveEnem.getVidas()+" Ronda: "+ronda;
 		game.getFont().getData().setScale(2f);		
 		game.getFont().draw(batch, str, 10, 30);
+		game.getFont().draw(batch, str2, 50, 100);
 		game.getFont().draw(batch, "Score:"+this.score, Gdx.graphics.getWidth()-150, 30);
 		game.getFont().draw(batch, "HighScore:"+game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
 	}
@@ -151,13 +153,18 @@ public class PantallaJuego implements Screen {
 		  	        }
 		            
 		            
-		            /*        
+		                    
 		          //manejo de colision con nave
+		            
 		            if(b.checkCollisionNave(nave)) {
 		            	 herida.play();   // no se por que no suena
 		            }
-		            */    
 		            
+		          //manejo de colision con nave enemiga
+		            if(b.checkCollisionNaveEnem(naveEnem)) {
+		            	 herida.play();   // no se por que no suena
+		            }
+
 		            
 		         //   b.draw(batch);
 		            if (b.isDestroyed()) {
@@ -225,7 +232,7 @@ public class PantallaJuego implements Screen {
 	      }
 	      nave.draw(batch, this);
 	      
-	      //naveEnem.draw(batch, this);
+	      naveEnem.draw(batch, this);
 	      
 	      //dibujar asteroides y manejar colision con nave
 	      for (int i = 0; i < balls1.size(); i++) {

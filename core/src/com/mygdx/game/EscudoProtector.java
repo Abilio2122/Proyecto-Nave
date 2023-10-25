@@ -90,7 +90,6 @@ public class EscudoProtector implements PowerUp {
 	}
 
 	public Rectangle getArea() {
-		// TODO Auto-generated method stub
 		return spr.getBoundingRectangle();
 	}
 

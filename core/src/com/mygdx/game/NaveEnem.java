@@ -6,18 +6,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 
 public class NaveEnem extends NaveAbstract {
 	
 	private float xSpeed;
-	private NaveJugador Nave;
-	
-    public NaveEnem(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
+	public NaveEnem(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
         super(1, 0, 0, tx, soundChoque, txBala, soundBala);
         spr = new Sprite(tx);
         spr.setPosition(x, y);
         spr.setBounds(x, y, 45, 45);
-        disparoIntervalo = 2.0f; // Intervalo de disparo en segundos
+        disparoIntervalo = 2; // Intervalo de disparo en segundos
         // Inicializar la velocidad horizontal
         xSpeed = 2.0f; // Ajusta la velocidad según tus necesidades
     }
@@ -68,10 +67,12 @@ public class NaveEnem extends NaveAbstract {
 
     @Override
     public void disparar(PantallaJuego juego) {
-        Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, -3, txBala, Nave);
+        Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, -3, txBala);
+        bala.setBalaFromNaveEnem();
         juego.agregarBala(bala);
         soundBala.play();
     }
 
+    
 
 }
