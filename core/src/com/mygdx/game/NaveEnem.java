@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 public class NaveEnem extends NaveAbstract {
+	private boolean viva = true;
 	
 	private float xSpeed;
 	public NaveEnem(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
@@ -16,7 +17,7 @@ public class NaveEnem extends NaveAbstract {
         spr = new Sprite(tx);
         spr.setPosition(x, y);
         spr.setBounds(x, y, 45, 45);
-        disparoIntervalo = 2; // Intervalo de disparo en segundos
+        disparoIntervalo = 1; // Intervalo de disparo en segundos
         // Inicializar la velocidad horizontal
         xSpeed = 2.0f; // Ajusta la velocidad según tus necesidades
     }
@@ -73,6 +74,13 @@ public class NaveEnem extends NaveAbstract {
         soundBala.play();
     }
 
+	public boolean getViva() {
+		return viva;
+	}
+	
+	public void setViva(boolean viva) {
+		this.viva=viva;
+	}
     
 
 }

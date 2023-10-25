@@ -93,7 +93,7 @@ public class PantallaJuego implements Screen {
 				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
 				new Texture(Gdx.files.internal("Rocket2.png")), 
 				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
-		naveEnem.setVidas(2);
+		naveEnem.setVidas(1);
 		
         //crear asteroides
         Random r = new Random();
@@ -120,10 +120,12 @@ public class PantallaJuego implements Screen {
     
 	public void dibujaEncabezado() {
 		CharSequence str = "Vidas: "+nave.getVidas()+" Ronda: "+ronda;
-		CharSequence str2 = "Vidas: "+naveEnem.getVidas()+" Ronda: "+ronda;
+		if (naveEnem.getViva()) {
+	        CharSequence str2 = "Vidas Enemigo: " + naveEnem.getVidas();
+	        game.getFont().draw(batch, str2, 10, 780);
+	    }
 		game.getFont().getData().setScale(2f);		
 		game.getFont().draw(batch, str, 10, 30);
-		game.getFont().draw(batch, str2, 50, 100);
 		game.getFont().draw(batch, "Score:"+this.score, Gdx.graphics.getWidth()-150, 30);
 		game.getFont().draw(batch, "HighScore:"+game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
 	}
@@ -171,6 +173,8 @@ public class PantallaJuego implements Screen {
 		                balas.remove(b);
 		                i--; //para no saltarse 1 tras eliminar del arraylist
 		            }
+		            
+		            
 
 		      }
 		      //actualizar movimiento de asteroides dentro del area
@@ -232,8 +236,9 @@ public class PantallaJuego implements Screen {
 	      }
 	      nave.draw(batch, this);
 	      
-	      naveEnem.draw(batch, this);
-	      
+	      if(!naveEnem.estaDestruido()) {
+	    	  naveEnem.draw(batch, this);
+	      }
 	      //dibujar asteroides y manejar colision con nave
 	      for (int i = 0; i < balls1.size(); i++) {
 	    	    Ball2 b=balls1.get(i);

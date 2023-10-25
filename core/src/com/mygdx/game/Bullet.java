@@ -72,6 +72,7 @@ public class Bullet {
 	        	nave.setVidas(vidas);
 	            if (vidas <= 0)
 	                nave.destruida = true;
+	            	nave.setViva(false);
 	        }
 	        return false;
 	    }
