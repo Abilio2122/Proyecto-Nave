@@ -13,8 +13,12 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class NaveJugador extends NaveAbstract {
 	private boolean escudoActivo = false;
+	private boolean tieneCohete = false;
+	private int disparosConCohete = 0;
+
 	private Texture texturaSinEscudo = new Texture(Gdx.files.internal("MainShip3.png"));
 	private Texture texturaConEscudo = new Texture(Gdx.files.internal("MainShip4.png"));
+	private Texture texturaConCohete = new Texture(Gdx.files.internal("MainShip5.png"));
 	
     public NaveJugador(int x, int y, Texture tx, Sound soundChoque, Texture txBala, Sound soundBala) {
         super(3, 0, 0, tx, soundChoque, txBala, soundBala);
@@ -55,11 +59,28 @@ public class NaveJugador extends NaveAbstract {
 
     @Override
     public void disparar(PantallaJuego juego) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
-            bala.setBalaFromNave();
-            juego.agregarBala(bala);
-            soundBala.play();
+    	if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if (tienePotenciadorCohete()) {
+                disparosConCohete++;
+                if (disparosConCohete >= 5) {
+                    desactivarCohete();
+                    setNaveTexturaConEscudo(); // Cambia la textura de la nave a la imagen con escudo.
+                }
+
+                // Dispara múltiples balas
+                for (int i = 0; i < 2; i++) {
+                    Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
+                    bala.setBalaFromNave();
+                    juego.agregarBala(bala);
+                }
+                soundBala.play();
+            } else {
+                // Si no tiene el potenciador "Cohete", dispara una sola bala.
+                Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
+                bala.setBalaFromNave();
+                juego.agregarBala(bala);
+                soundBala.play();
+            }
         }
     }
 
@@ -137,6 +158,41 @@ public class NaveJugador extends NaveAbstract {
     
     
     
+    public boolean checkCollisione(Cohete l) {
+        if(l.getArea().overlaps(spr.getBoundingRectangle())){
+        	// rebote
+            if (xVel ==0) xVel += l.getXSpeed()/2;
+            if (l.getXSpeed() ==0) l.setXSpeed(l.getXSpeed() + (int)xVel/2);
+            xVel = - xVel;
+            l.setXSpeed(-l.getXSpeed());
+            
+            if (yVel ==0) yVel += l.getySpeed()/2;
+            if (l.getySpeed() ==0) l.setySpeed(l.getySpeed() + (int)yVel/2);
+            yVel = - yVel;
+            l.setySpeed(- l.getySpeed());
+            
+            activarCohete(l);
+            spr.setTexture(texturaConCohete);
+            return true;
+        }
+        return false;
+    }
     
+
+    public void activarCohete(Cohete cohete) {
+        tieneCohete = true;
+    }
     
+    public boolean tienePotenciadorCohete() {
+        return tieneCohete;
+    }
+    
+    public void desactivarCohete() {
+    	tieneCohete = false;
+    }
+    
+    public void setNaveTexturaConCohete() {
+        spr.setTexture(texturaConCohete);
+    }
+
 }

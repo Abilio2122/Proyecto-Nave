@@ -35,6 +35,12 @@ public class PantallaJuego implements Screen {
 	private EscudoProtector p;
 	boolean escudoA;
 	
+	private int velXCohete; 
+	private int velYCohete; 
+	private int cantMisil;
+	private Cohete j;
+	boolean coheteA;
+	
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();// Hay 2 arrayList para manejar las coliciones 
 	private  ArrayList<Ball2> balls2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
@@ -42,8 +48,11 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<EscudoProtector> escudo1 = new ArrayList<>();
 	private  ArrayList<EscudoProtector> escudo2 = new ArrayList<>();
 	
+	private  ArrayList<Cohete> Misil1 = new ArrayList<>();
+	private  ArrayList<Cohete> Misil2 = new ArrayList<>();
+	
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
-			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo, int cantAsteroides, boolean escudoA) {
+			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo,int velXCohete ,int velYCohete, int cantMisil, int cantAsteroides, boolean escudoA, boolean coheteA) {
 		this.game = game;
 		this.ronda = ronda;
 		this.score = score;
@@ -61,7 +70,7 @@ public class PantallaJuego implements Screen {
 		
 		//inicializar assets; musica de fondo y efectos de sonido
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
-		explosionSound.setVolume(1,0.25f);
+		explosionSound.setVolume(1,0.2f);
 		
 		herida = Gdx.audio.newSound(Gdx.files.internal("ay.mp3"));
 		herida.setVolume(1,0.25f);
@@ -83,6 +92,11 @@ public class PantallaJuego implements Screen {
 	    if(escudoA) {
 	        nave.aplicarEscudoProtector(p);
 	    	nave.setNaveTexturaConEscudo();
+	    }
+	    
+	    if(coheteA) {
+	    	nave.activarCohete(j);
+	    	nave.setNaveTexturaConCohete();
 	    }
 	    
         nave.setVidas(vidas);
@@ -116,6 +130,17 @@ public class PantallaJuego implements Screen {
 	        escudo1.add(bb);
 	        escudo2.add(bb);
 	  	}
+	    
+	  //Crear Cohetes
+	    Random q = new Random();
+	    for(int i = 0 ; i < cantMisil ; i++) {
+	    	Cohete bb = new Cohete(q.nextInt((int)Gdx.graphics.getWidth()),
+	    			150+q.nextInt((int)Gdx.graphics.getHeight()-80),
+	    			50+q.nextInt(10), velXEscudo+r.nextInt(4), velYEscudo+r.nextInt(4),
+	    			new Texture(Gdx.files.internal("Misil.png")));
+	    	Misil1.add(bb);
+	        Misil2.add(bb);
+	    }
 	}
     
 	public void dibujaEncabezado() {
@@ -228,6 +253,20 @@ public class PantallaJuego implements Screen {
 			          }
 			        }
 			      }
+		      
+		      
+		    //Colision entre Cohetes   /**/
+		      for(int i = 0 ; i < Misil1.size() ; i++) {
+		    	  Cohete m1 = Misil1.get(i);
+		    	  for(int j = 0 ; j < Misil2.size() ; j++) {
+		    		  Cohete m2 = Misil2.get(i);
+		    		  if(i<j) {
+		    			  m1.checkCollision(m2);
+		    		  }
+		    	  }
+		      }
+		     
+		      
 	      }
 	      
 	      //dibujar balas
@@ -262,8 +301,22 @@ public class PantallaJuego implements Screen {
 	            	  escudo1.remove(i);
 	            	  escudo2.remove(i);
 	            	 i--;
-	              }   	  
+	              }
+	             
 	     }
+	      
+	    //nave choca con cohete  /**/
+	      for (int i = 0; i < Misil1.size(); i++) {
+	    	    Cohete b=Misil1.get(i);
+	    	    b.draw(batch,this);
+		          
+	              if (nave.checkCollisione(b)) {
+		            //asteroide se destruye con el choque             
+	            	  Misil1.remove(i);
+	            	  Misil2.remove(i);
+	            	 i--;
+	              }
+	      }
 	      
 	      
 	      if (nave.estaDestruido()) {
@@ -278,13 +331,13 @@ public class PantallaJuego implements Screen {
 	      //nivel completado
 	      if (balls1.size()==0) {
 			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+1, velYAsteroides+1,velXEscudo,velYEscudo,cantEscudo, cantAsteroides+2,nave.tieneEscudoActivo());
+					velXAsteroides+1, velYAsteroides+1,velXEscudo,velYEscudo,cantEscudo, velXCohete, velYCohete, cantMisil, cantAsteroides+2,nave.tieneEscudoActivo(), nave.tienePotenciadorCohete());
 			ss.resize(1200, 800);
 			game.setScreen(ss);
 			dispose();
-		  }
-	    	 
+	      }
 	}
+	
     
     public boolean agregarBala(Bullet bb) {
     	return balas.add(bb);
