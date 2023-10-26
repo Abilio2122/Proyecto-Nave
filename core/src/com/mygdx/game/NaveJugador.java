@@ -61,19 +61,21 @@ public class NaveJugador extends NaveAbstract {
     public void disparar(PantallaJuego juego) {
     	if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (tienePotenciadorCohete()) {
-                disparosConCohete++;
-                if (disparosConCohete >= 5) {
-                    desactivarCohete();
-                    setNaveTexturaConEscudo(); // Cambia la textura de la nave a la imagen con escudo.
-                }
-
-                // Dispara múltiples balas
+                // Dispara múltiples balas con una separación
                 for (int i = 0; i < 2; i++) {
-                    Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
+                    float offset = 20 * (i - 0.5f); // Ajusta el offset para crear una separación
+                    Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5 + offset, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
                     bala.setBalaFromNave();
                     juego.agregarBala(bala);
                 }
                 soundBala.play();
+                
+                disparosConCohete++; // Incrementa el contador de disparos con cohete.
+                
+                if (disparosConCohete >= 5) {
+                    desactivarCohete();
+                    spr.setTexture(texturaSinEscudo); // Cambia la textura de la nave al final del efecto.
+                }
             } else {
                 // Si no tiene el potenciador "Cohete", dispara una sola bala.
                 Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);

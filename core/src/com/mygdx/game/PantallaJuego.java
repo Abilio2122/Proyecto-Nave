@@ -211,6 +211,9 @@ public class PantallaJuego implements Screen {
 		    	  escudo1.get(i).update();
 		      }
 		      
+		      for(int i = 0 ; i < Misil1.size() ; i++) {
+		    	  Misil1.get(i).update();
+		      }
 		      //interaccion bala con escudos
 	    	  for (int i = 0; i < balas.size(); i++) {
 		            Bullet b = balas.get(i);
