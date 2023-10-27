@@ -99,6 +99,27 @@ public class Bullet {
 	        return false;
 	    }
 	    
+	    public boolean checkCollision(Cohete b2) {
+	    	NaveJugador naveJugador = (NaveJugador) Nave;
+	    	
+	        if(spr.getBoundingRectangle().overlaps(b2.getArea())&& Nave!= null){
+	        	// Se destruyen ambos
+	            this.destroyed = true;
+	            
+	         // Aplicar el efecto del EscudoProtector en la nave
+	            naveJugador.activarPotenciador(b2);
+	            
+	            
+	            // Cambiar la textura de la nave a la versión con escudo
+	            naveJugador.setNaveTexturaConEscudo();
+	            return true;
+	            
+	
+	        }
+	        return false;
+	    }
+	    
+	    
 	    public void setBalaFromNave() {
 	    	balaFromNave = true;
 	    }

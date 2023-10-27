@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Cohete implements PowerUp {
 	private int disparos;
-	private boolean activoC;
 	private int xSpeed;
 	private int ySpeed;
 	private Sprite spr;
@@ -17,10 +16,10 @@ public class Cohete implements PowerUp {
 	
 	
 	public void apply(NaveJugador nave) {
-		if (!activoC) {
-           activoC= true;
-           nave.activarCohete(this);
-		}
+		if (!nave.tienePotenciadorCohete()) {
+            nave.activarPotenciador(this);
+            nave.setNaveTexturaConCohete();
+        }
 	}
 	
 	
@@ -41,7 +40,7 @@ public class Cohete implements PowerUp {
 	        this.setySpeed(ySpeed);
 	    }
 	 
-	 public void draw(SpriteBatch batch,PantallaJuego juego) {
+	 public void draw(SpriteBatch batch) {
 	    	spr.draw(batch);
 	    	
 	 }

@@ -37,7 +37,7 @@ public class EscudoProtector implements PowerUp {
         this.setySpeed(ySpeed);
     }
 
-    public void draw(SpriteBatch batch,PantallaJuego juego) {
+    public void draw(SpriteBatch batch) {
     	spr.draw(batch);
     	
     }

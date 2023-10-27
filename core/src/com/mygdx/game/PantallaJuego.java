@@ -34,6 +34,7 @@ public class PantallaJuego implements Screen {
 	private int cantEscudo;
 	private EscudoProtector p;
 	boolean escudoA;
+	private Potenciador potenciador;
 	
 	private int velXCohete; 
 	private int velYCohete; 
@@ -95,7 +96,7 @@ public class PantallaJuego implements Screen {
 	    }
 	    
 	    if(coheteA) {
-	    	nave.activarCohete(j);
+	    	nave.activarPotenciador(j);
 	    	nave.setNaveTexturaConCohete();
 	    }
 	    
@@ -121,26 +122,12 @@ public class PantallaJuego implements Screen {
 	  	}
 	    
 	    //Crear Escudos
-	    Random e = new Random();
-	    for (int i = 0; i < cantEscudo; i++) {
-	        EscudoProtector bb = new EscudoProtector(e.nextInt((int)Gdx.graphics.getWidth()),
-	  	            150+e.nextInt((int)Gdx.graphics.getHeight()-80),
-	  	            50+e.nextInt(10), velXEscudo+r.nextInt(4), velYEscudo+r.nextInt(4), 
-	  	            new Texture(Gdx.files.internal("escudo.png")));	   
-	        escudo1.add(bb);
-	        escudo2.add(bb);
-	  	}
+	    potenciador = new Potenciador();
+	    potenciador.generarEscudos(escudo1, escudo2, cantEscudo, velXEscudo, velYEscudo);
 	    
-	  //Crear Cohetes
-	    Random q = new Random();
-	    for(int i = 0 ; i < cantMisil ; i++) {
-	    	Cohete bb = new Cohete(q.nextInt((int)Gdx.graphics.getWidth()),
-	    			150+q.nextInt((int)Gdx.graphics.getHeight()-80),
-	    			50+q.nextInt(10), velXEscudo+r.nextInt(4), velYEscudo+r.nextInt(4),
-	    			new Texture(Gdx.files.internal("Misil.png")));
-	    	Misil1.add(bb);
-	        Misil2.add(bb);
-	    }
+	    
+	  //Crear Cohetes  
+	    potenciador.generarCohetes(Misil1, Misil2, cantMisil, velXCohete, velYCohete);
 	}
     
 	public void dibujaEncabezado() {
@@ -179,10 +166,7 @@ public class PantallaJuego implements Screen {
 		              }
 		  	        }
 		            
-		            
-		                    
 		          //manejo de colision con nave
-		            
 		            if(b.checkCollisionNave(nave)) {
 		            	 herida.play();   // no se por que no suena
 		            }
@@ -215,22 +199,8 @@ public class PantallaJuego implements Screen {
 		    	  Misil1.get(i).update();
 		      }
 		      //interaccion bala con escudos
-	    	  for (int i = 0; i < balas.size(); i++) {
-		            Bullet b = balas.get(i);
-		            b.update();
-		            for (int j = 0; j < escudo1.size(); j++) {    
-		              if (b.checkCollision(escudo1.get(j))) {          
-		            	 escudo1.remove(j);
-		            	 escudo2.remove(j);
-		            	 j--;
-		            	 score +=10;
-		              }   	  
-		  	        }   
-		            if (b.isDestroyed()) {
-		                balas.remove(b);
-		                i--; 
-		            }
-		      }
+	    	  potenciador.interactuarBalasConEscudos(balas, escudo1, escudo2);
+	    	  potenciador.interactuarBalasConCohete(balas, Misil1, Misil2);
 		      
 		      //colisiones entre asteroides y sus rebotes  
 		      for (int i=0;i<balls1.size();i++) {
@@ -244,30 +214,12 @@ public class PantallaJuego implements Screen {
 		        }
 		      } 
 		      
-		      //Colision entre escudos
-		      
-		      for (int i=0;i<escudo1.size();i++) {
-			    	EscudoProtector e1 = escudo1.get(i);   
-			        for (int j=0;j<escudo2.size();j++) {
-			        	EscudoProtector e2 = escudo2.get(j); 
-			          if (i<j) {
-			        	  e1.checkCollision(e2);
-			     
-			          }
-			        }
-			      }
+		      //Colision entre escudos ////
+		      potenciador.comprobarColisionEscudos(escudo1, escudo2);
 		      
 		      
 		    //Colision entre Cohetes   /**/
-		      for(int i = 0 ; i < Misil1.size() ; i++) {
-		    	  Cohete m1 = Misil1.get(i);
-		    	  for(int j = 0 ; j < Misil2.size() ; j++) {
-		    		  Cohete m2 = Misil2.get(i);
-		    		  if(i<j) {
-		    			  m1.checkCollision(m2);
-		    		  }
-		    	  }
-		      }
+		      potenciador.comprobarColisionCohetes(Misil1, Misil2);
 		     
 		      
 	      }
@@ -294,32 +246,11 @@ public class PantallaJuego implements Screen {
               }   	  
   	        }
 	      
-	      //nave choca con escudo
-	      for (int i = 0; i < escudo1.size(); i++) {
-	    	    EscudoProtector b=escudo1.get(i);
-	    	    b.draw(batch,this);
-		          
-	              if (nave.checkCollisione(b)) {
-		            //asteroide se destruye con el choque             
-	            	  escudo1.remove(i);
-	            	  escudo2.remove(i);
-	            	 i--;
-	              }
-	             
-	     }
+	      //nave choca con escudo  /////
+	      potenciador.comprobarColisionNaveConEscudos(batch,nave, escudo1, escudo2);
 	      
 	    //nave choca con cohete  /**/
-	      for (int i = 0; i < Misil1.size(); i++) {
-	    	    Cohete b=Misil1.get(i);
-	    	    b.draw(batch,this);
-		          
-	              if (nave.checkCollisione(b)) {
-		            //asteroide se destruye con el choque             
-	            	  Misil1.remove(i);
-	            	  Misil2.remove(i);
-	            	 i--;
-	              }
-	      }
+	      potenciador.comprobarColisionNaveConCohetes(batch,nave,Misil1,Misil2);
 	      
 	      
 	      if (nave.estaDestruido()) {

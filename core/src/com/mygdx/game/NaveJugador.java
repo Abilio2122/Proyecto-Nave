@@ -15,6 +15,7 @@ public class NaveJugador extends NaveAbstract {
 	private boolean escudoActivo = false;
 	private boolean tieneCohete = false;
 	private int disparosConCohete = 0;
+	 private Sprite sprite;
 
 	private Texture texturaSinEscudo = new Texture(Gdx.files.internal("MainShip3.png"));
 	private Texture texturaConEscudo = new Texture(Gdx.files.internal("MainShip4.png"));
@@ -173,7 +174,7 @@ public class NaveJugador extends NaveAbstract {
             yVel = - yVel;
             l.setySpeed(- l.getySpeed());
             
-            activarCohete(l);
+            activarPotenciador(l);
             spr.setTexture(texturaConCohete);
             return true;
         }
@@ -181,7 +182,7 @@ public class NaveJugador extends NaveAbstract {
     }
     
 
-    public void activarCohete(Cohete cohete) {
+    public void activarPotenciador(Cohete cohete) {
         tieneCohete = true;
     }
     
@@ -195,6 +196,10 @@ public class NaveJugador extends NaveAbstract {
     
     public void setNaveTexturaConCohete() {
         spr.setTexture(texturaConCohete);
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 
 }
