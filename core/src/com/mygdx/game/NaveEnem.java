@@ -19,9 +19,8 @@ public class NaveEnem extends NaveAbstract {
         spr.setBounds(x, y, 45, 45);
         disparoIntervalo = 1; // Intervalo de disparo en segundos
         // Inicializar la velocidad horizontal
-        xSpeed = 2.0f; // Ajusta la velocidad según tus necesidades
-    }
-
+        xSpeed = 2.0f;
+	}
     @Override
     public void draw(SpriteBatch batch, PantallaJuego juego) {
         float x = spr.getX();

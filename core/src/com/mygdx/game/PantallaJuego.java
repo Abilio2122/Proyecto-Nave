@@ -172,7 +172,7 @@ public class PantallaJuego implements Screen {
 		            }
 		            
 		          //manejo de colision con nave enemiga
-		            if(b.checkCollisionNaveEnem(naveEnem)) {
+		            if(b.checkCollisionNave(naveEnem)) {
 		            	 herida.play();   // no se por que no suena
 		            }
 

@@ -101,4 +101,11 @@ public class Cohete implements PowerUp {
 	 public Rectangle getArea() {
 		return spr.getBoundingRectangle();
 	 }
+
+
+	@Override
+	public void draw(SpriteBatch batch, PantallaJuego juego) {
+		// TODO Auto-generated method stub
+		
+	}
 }

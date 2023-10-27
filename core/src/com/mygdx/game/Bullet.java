@@ -49,35 +49,37 @@ public class Bullet {
 	    }
 	    
 	    
-	    public boolean checkCollisionNave(NaveJugador nave) {
-	        if(spr.getBoundingRectangle().overlaps(nave.getArea())&&!balaFromNave){
-	        	System.out.println("Nave: " + nave);
-	        	this.destroyed = true;
-	        	int vidas=nave.getVidas();
-	        	vidas--;
-	        	nave.setVidas(vidas);
-	            if (vidas <= 0)
-	                nave.destruida = true;
-	        }
-	        return false;
-	    }
-	    
-	    
-	    public boolean checkCollisionNaveEnem(NaveEnem nave) {
-	        if(spr.getBoundingRectangle().overlaps(nave.getArea())&&!balaFromNaveEnem){
-	        	System.out.println("Nave: " + nave);
-	        	this.destroyed = true;
-	        	int vidas=nave.getVidas();
-	        	vidas--;
-	        	nave.setVidas(vidas);
-	            if (vidas <= 0)
-	                nave.destruida = true;
-	            	nave.setViva(false);
-	        }
-	        return false;
-	    }
-	    
 
+	    
+	    public boolean checkCollisionNave(NaveAbstract nave) {
+	    	if (nave instanceof NaveEnem) {
+	    		if(spr.getBoundingRectangle().overlaps(nave.getArea())&&!balaFromNaveEnem){
+		        	this.destroyed = true;
+		        	int vidas=nave.getVidas();
+		        	vidas--;
+		        	nave.setVidas(vidas);
+		            if (vidas <= 0)
+		                nave.destruida = true;
+		            	((NaveEnem) nave).setViva(false);
+		        }
+		        return false;
+            }
+	    	else {
+		    	if (spr.getBoundingRectangle().overlaps(nave.getArea())&&!balaFromNave) {
+		            this.destroyed = true;
+		            int vidas = nave.getVidas();
+		            vidas--;
+		            nave.setVidas(vidas);
+		            if (vidas <= 0) {
+		                nave.destruida = true;
+		            }
+		    	}
+		    
+	        
+	    	}
+	    	
+	    	return false;
+	    }
 	    
 	    public boolean checkCollision(EscudoProtector b2) {
 	    	NaveJugador naveJugador = (NaveJugador) Nave;
