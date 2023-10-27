@@ -78,12 +78,12 @@ public class Cohete implements PowerUp {
 			return disparos;
 	 }
 	
-	 int getySpeed() {
+	 public int getySpeed() {
 		// TODO Auto-generated method stub
 		return ySpeed;
 	 }
 
-	 int getXSpeed() {
+	 public int getXSpeed() {
 		// TODO Auto-generated method stub
 		return xSpeed;
 	 }

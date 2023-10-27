@@ -69,12 +69,12 @@ public class EscudoProtector implements PowerUp {
         }
     }
     
-	int getySpeed() {
+	public int getySpeed() {
 		// TODO Auto-generated method stub
 		return ySpeed;
 	}
 
-	int getXSpeed() {
+	public int getXSpeed() {
 		// TODO Auto-generated method stub
 		return xSpeed;
 	}
@@ -91,6 +91,16 @@ public class EscudoProtector implements PowerUp {
 
 	public Rectangle getArea() {
 		return spr.getBoundingRectangle();
+	}
+	@Override
+	public void draw(SpriteBatch batch, PantallaJuego juego) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void checkCollision(Cohete b2) {
+		// TODO Auto-generated method stub
+		
 	}
 
     
