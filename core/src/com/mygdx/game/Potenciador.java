@@ -7,6 +7,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Potenciador {
 	private boolean tienePotenciador;
+	
+	public void usarPowerUps(NaveJugador nave,boolean escudoA,boolean coheteA) {
+        // Crea instancias de EscudoProtector y Cohete
+        EscudoProtector escudo = new EscudoProtector(0, 0, 0, 0, 0, new Texture(Gdx.files.internal("escudo.png"))); 
+        Cohete cohete = new Cohete(0, 0, 0, 0, 0, new Texture(Gdx.files.internal("Misil.png"))) ;
+
+        // Aplica los power-ups a la nave
+	    if(escudoA) {
+	    	escudo.apply(nave);
+	    }
+	    
+	    if(coheteA) {
+	    	cohete.apply(nave);
+	    }
+    }
 
 /*COHETE*/
     public void generarCohetes(ArrayList<Cohete> Misil1, ArrayList<Cohete> Misil2, int cantMisil, int velXCohete, int velYCohete){
@@ -114,6 +129,7 @@ public class Potenciador {
                     escudo1.remove(j);
                     escudo2.remove(j);
                     j--;
+                    
                 }
             }
             if (b.isDestroyed()) {
@@ -123,9 +139,6 @@ public class Potenciador {
         }
     }
 
-
-    
-    
 
     public void activarPotenciador() {
     	tienePotenciador = true;

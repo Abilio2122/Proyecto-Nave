@@ -16,10 +16,8 @@ public class Cohete implements PowerUp {
 	
 	
 	public void apply(NaveJugador nave) {
-		if (!nave.tienePotenciadorCohete()) {
-            nave.activarPotenciador(this);
-            nave.setNaveTexturaConCohete();
-        }
+    	nave.activarPotenciador(this);
+    	nave.setNaveTexturaConCohete();
 	}
 	
 	

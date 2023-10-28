@@ -15,10 +15,8 @@ public class EscudoProtector implements PowerUp {
     private boolean activo;
     
     public void apply(NaveJugador nave) {
-        if (!activo) {
-            activo = true;
-            nave.aplicarEscudoProtector(this);
-        }
+        nave.aplicarEscudoProtector(this);
+    	nave.setNaveTexturaConEscudo();
     }
     public EscudoProtector(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
     	spr = new Sprite(tx);

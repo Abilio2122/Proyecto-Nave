@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 	    protected Sound soundBala;
 	    protected Texture txBala;
 	    protected boolean herido = false;
-	    protected int tiempoHeridoMax=50;
+	    protected int tiempoHeridoMax=10;
 	    protected int tiempoHerido;
 	    protected long lastShotTime;
 	    protected float disparoIntervalo;

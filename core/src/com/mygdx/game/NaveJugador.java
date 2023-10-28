@@ -63,7 +63,7 @@ public class NaveJugador extends NaveAbstract {
                 // Dispara múltiples balas con una separación
                 for (int i = 0; i < 2; i++) {
                     float offset = 20 * (i - 0.5f); // Ajusta el offset para crear una separación
-                    Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5 + offset, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
+                    Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5 + offset, spr.getY() + spr.getHeight() - 5, 0, 3, txBala,this);
                     bala.setBalaFromNave();
                     juego.agregarBala(bala);
                 }
@@ -77,7 +77,7 @@ public class NaveJugador extends NaveAbstract {
                 }
             } else {
                 // Si no tiene el potenciador "Cohete", dispara una sola bala.
-                Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala);
+                Bullet bala = new Bullet(spr.getX() + spr.getWidth() / 2 - 5, spr.getY() + spr.getHeight() - 5, 0, 3, txBala,this);
                 bala.setBalaFromNave();
                 juego.agregarBala(bala);
                 soundBala.play();

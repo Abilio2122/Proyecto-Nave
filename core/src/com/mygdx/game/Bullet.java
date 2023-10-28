@@ -12,17 +12,25 @@ public class Bullet {
 	private int ySpeed;
 	private boolean destroyed = false;
 	private Sprite spr;
-	private NaveAbstract Nave;
+	private NaveJugador Nave;
 	private boolean balaFromNave = false;
 	private boolean balaFromNaveEnem = false;
-	;
 	
+	    public Bullet(float x, float y, int xSpeed, int ySpeed, Texture tx, NaveJugador nave) {
+	    	spr = new Sprite(tx);
+	    	spr.setPosition(x, y);
+	        this.xSpeed = xSpeed;
+	        this.ySpeed = ySpeed;
+	        this.Nave = nave;
+	    }
+	    
 	    public Bullet(float x, float y, int xSpeed, int ySpeed, Texture tx) {
 	    	spr = new Sprite(tx);
 	    	spr.setPosition(x, y);
 	        this.xSpeed = xSpeed;
 	        this.ySpeed = ySpeed;
 	    }
+	    
 	    public void update() {
 	        spr.setPosition(spr.getX()+xSpeed, spr.getY()+ySpeed);
 	        if (spr.getX() < 0 || spr.getX()+spr.getWidth() > Gdx.graphics.getWidth()) {
@@ -70,6 +78,7 @@ public class Bullet {
 		            int vidas = nave.getVidas();
 		            vidas--;
 		            nave.setVidas(vidas);
+		            nave.sonidoHerido.play();
 		            if (vidas <= 0) {
 		                nave.destruida = true;
 		            }
@@ -82,18 +91,17 @@ public class Bullet {
 	    }
 	    
 	    public boolean checkCollision(EscudoProtector b2) {
-	    	NaveJugador naveJugador = (NaveJugador) Nave;
 	    	
 	        if(spr.getBoundingRectangle().overlaps(b2.getArea())&& Nave!= null){
 	        	// Se destruyen ambos
 	            this.destroyed = true;
 	            
 	         // Aplicar el efecto del EscudoProtector en la nave
-	            naveJugador.aplicarEscudoProtector(b2);
+	            Nave.aplicarEscudoProtector(b2);
 	            
 	            
 	            // Cambiar la textura de la nave a la versión con escudo
-	            naveJugador.setNaveTexturaConEscudo();
+	            Nave.setNaveTexturaConEscudo();
 	            return true;
 	            
 	
@@ -102,18 +110,17 @@ public class Bullet {
 	    }
 	    
 	    public boolean checkCollision(Cohete b2) {
-	    	NaveJugador naveJugador = (NaveJugador) Nave;
 	    	
 	        if(spr.getBoundingRectangle().overlaps(b2.getArea())&& Nave!= null){
 	        	// Se destruyen ambos
 	            this.destroyed = true;
 	            
 	         // Aplicar el efecto del EscudoProtector en la nave
-	            naveJugador.activarPotenciador(b2);
+	            Nave.activarPotenciador(b2);
 	            
 	            
 	            // Cambiar la textura de la nave a la versión con escudo
-	            naveJugador.setNaveTexturaConEscudo();
+	            Nave.setNaveTexturaConCohete();
 	            return true;
 	            
 	

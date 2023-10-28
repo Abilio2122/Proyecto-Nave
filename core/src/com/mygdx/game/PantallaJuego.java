@@ -63,6 +63,7 @@ public class PantallaJuego implements Screen {
 		this.velXEscudo=velXEscudo;
 		this.velYEscudo=velYEscudo;
 		this.cantEscudo=cantEscudo;
+		this.potenciador = new Potenciador();
 		
 		
 		batch = game.getBatch();
@@ -90,15 +91,7 @@ public class PantallaJuego implements Screen {
 	    
 	    //Ve si tiene el escudo activo
 	    
-	    if(escudoA) {
-	        nave.aplicarEscudoProtector(p);
-	    	nave.setNaveTexturaConEscudo();
-	    }
-	    
-	    if(coheteA) {
-	    	nave.activarPotenciador(j);
-	    	nave.setNaveTexturaConCohete();
-	    }
+	    potenciador.usarPowerUps(nave, escudoA, coheteA); //Se usa aquí la interfaz
 	    
         nave.setVidas(vidas);
         
@@ -122,7 +115,6 @@ public class PantallaJuego implements Screen {
 	  	}
 	    
 	    //Crear Escudos
-	    potenciador = new Potenciador();
 	    potenciador.generarEscudos(escudo1, escudo2, cantEscudo, velXEscudo, velYEscudo);
 	    
 	    
@@ -146,6 +138,7 @@ public class PantallaJuego implements Screen {
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
           batch.begin();
 		  dibujaEncabezado();
+		  
 	      if (!nave.estaHerido()) {
 		      // colisiones entre balas y asteroides y su destruccion  
 	    	  
@@ -183,8 +176,6 @@ public class PantallaJuego implements Screen {
 		                i--; //para no saltarse 1 tras eliminar del arraylist
 		            }
 		            
-		            
-
 		      }
 		      //actualizar movimiento de asteroides dentro del area
 		      for (Ball2 ball : balls1) {
@@ -199,6 +190,7 @@ public class PantallaJuego implements Screen {
 		    	  Misil1.get(i).update();
 		      }
 		      //interaccion bala con escudos
+		      
 	    	  potenciador.interactuarBalasConEscudos(balas, escudo1, escudo2);
 	    	  potenciador.interactuarBalasConCohete(balas, Misil1, Misil2);
 		      
@@ -313,5 +305,5 @@ public class PantallaJuego implements Screen {
 		this.explosionSound.dispose();
 		this.gameMusic.dispose();
 	}
-   
+	
 }
