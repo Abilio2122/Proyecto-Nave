@@ -49,8 +49,8 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<EscudoProtector> escudo1 = new ArrayList<>();
 	private  ArrayList<EscudoProtector> escudo2 = new ArrayList<>();
 	
-	private  ArrayList<Cohete> Misil1 = new ArrayList<>();
-	private  ArrayList<Cohete> Misil2 = new ArrayList<>();
+	private  ArrayList<Cohete> misil1 = new ArrayList<>();
+	private  ArrayList<Cohete> misil2 = new ArrayList<>();
 	
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo,int velXCohete ,int velYCohete, int cantMisil, int cantAsteroides, boolean escudoA, boolean coheteA) {
@@ -119,7 +119,7 @@ public class PantallaJuego implements Screen {
 	    
 	    
 	  //Crear Cohetes  
-	    potenciador.generarCohetes(Misil1, Misil2, cantMisil, velXCohete, velYCohete);
+	    potenciador.generarCohetes(misil1, misil2, cantMisil, velXCohete, velYCohete);
 	}
     
 	public void dibujaEncabezado() {
@@ -186,13 +186,13 @@ public class PantallaJuego implements Screen {
 		    	  escudo1.get(i).update();
 		      }
 		      
-		      for(int i = 0 ; i < Misil1.size() ; i++) {
-		    	  Misil1.get(i).update();
+		      for(int i = 0 ; i < misil1.size() ; i++) {
+		    	  misil1.get(i).update();
 		      }
 		      //interaccion bala con escudos
 		      
 	    	  potenciador.interactuarBalasConEscudos(balas, escudo1, escudo2);
-	    	  potenciador.interactuarBalasConCohete(balas, Misil1, Misil2);
+	    	  potenciador.interactuarBalasConCohete(balas, misil1, misil2);
 		      
 		      //colisiones entre asteroides y sus rebotes  
 		      for (int i=0;i<balls1.size();i++) {
@@ -211,7 +211,7 @@ public class PantallaJuego implements Screen {
 		      
 		      
 		    //Colision entre Cohetes   /**/
-		      potenciador.comprobarColisionCohetes(Misil1, Misil2);
+		      potenciador.comprobarColisionCohetes(misil1, misil2);
 		     
 		      
 	      }
@@ -242,7 +242,7 @@ public class PantallaJuego implements Screen {
 	      potenciador.comprobarColisionNaveConEscudos(batch,nave, escudo1, escudo2);
 	      
 	    //nave choca con cohete  /**/
-	      potenciador.comprobarColisionNaveConCohetes(batch,nave,Misil1,Misil2);
+	      potenciador.comprobarColisionNaveConCohetes(batch,nave,misil1,misil2);
 	      
 	      
 	      if (nave.estaDestruido()) {

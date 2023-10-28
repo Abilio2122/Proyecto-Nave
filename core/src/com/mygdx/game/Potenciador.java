@@ -36,11 +36,11 @@ public class Potenciador {
         }
     }
     
-    public void comprobarColisionCohetes(ArrayList<Cohete> Misil1, ArrayList<Cohete> Misil2) {
-        for(int i = 0 ; i < Misil1.size() ; i++) {
-            Cohete m1 = Misil1.get(i);
-            for(int j = 0 ; j < Misil2.size() ; j++) {
-                Cohete m2 = Misil2.get(i);
+    public void comprobarColisionCohetes(ArrayList<Cohete> misil1, ArrayList<Cohete> misil2) {
+        for(int i = 0 ; i < misil1.size() ; i++) {
+            Cohete m1 = misil1.get(i);
+            for(int j = 0 ; j < misil2.size() ; j++) {
+                Cohete m2 = misil2.get(i);
                 if(i<j) {
                     m1.checkCollision(m2);
                 }
@@ -48,29 +48,29 @@ public class Potenciador {
         }
     }
 
-    public void comprobarColisionNaveConCohetes(SpriteBatch batch, NaveJugador nave, ArrayList<Cohete> Misil1, ArrayList<Cohete> Misil2) {
-        for (int i = 0; i < Misil1.size(); i++) {
-            Cohete b = Misil1.get(i);
+    public void comprobarColisionNaveConCohetes(SpriteBatch batch, NaveJugador nave, ArrayList<Cohete> misil1, ArrayList<Cohete> misil2) {
+        for (int i = 0; i < misil1.size(); i++) {
+            Cohete b = misil1.get(i);
             b.draw(batch);
 
             if (nave.checkCollisione(b)) {
                 // Cohete se destruye con el choque             
-                Misil1.remove(i);
-                Misil2.remove(i);
+                misil1.remove(i);
+                misil2.remove(i);
                 i--;
             }
         }
     }
     
     
-    public void interactuarBalasConCohete(ArrayList<Bullet> balas, ArrayList<Cohete> Misil1, ArrayList<Cohete> Misil2) {
+    public void interactuarBalasConCohete(ArrayList<Bullet> balas, ArrayList<Cohete> misil1, ArrayList<Cohete> misil2) {
         for (int i = 0; i < balas.size(); i++) {
             Bullet b = balas.get(i);
             b.update();
-            for (int j = 0; j < Misil1.size(); j++) {
-                if (b.checkCollision(Misil1.get(j))) {
-                    Misil1.remove(j);
-                    Misil2.remove(j);
+            for (int j = 0; j < misil1.size(); j++) {
+                if (b.checkCollision(misil1.get(j))) {
+                    misil1.remove(j);
+                    misil2.remove(j);
                     j--;
                 }
             }
