@@ -51,6 +51,7 @@ public class PantallaJuego implements Screen {
 	
 	private  ArrayList<Cohete> misil1 = new ArrayList<>();
 	private  ArrayList<Cohete> misil2 = new ArrayList<>();
+
 	
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo,int velXCohete ,int velYCohete, int cantMisil, int cantAsteroides, boolean escudoA, boolean coheteA) {
@@ -83,11 +84,15 @@ public class PantallaJuego implements Screen {
 		gameMusic.setVolume(0.75f);
 		gameMusic.play();
 		
+		
+		
 	    // cargar imagen de la nave, 64x64   
 	    nave = new NaveJugador(Gdx.graphics.getWidth()/2-50,30,new Texture(Gdx.files.internal("MainShip3.png")),
 	    				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
 	    				new Texture(Gdx.files.internal("Rocket2.png")), 
 	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
+	    
+	    
 	    
 	    //Ve si tiene el escudo activo
 	    
