@@ -32,7 +32,7 @@ import com.badlogic.gdx.math.Rectangle;
 	        lastShotTime = System.currentTimeMillis();
 	    }
 
-	    public abstract void draw(SpriteBatch batch, PantallaJuego juego);
+	    public abstract void draw(SpriteBatch batch, PantallaJuego juego, MovimientoEstrategia estrategia);
 
 	    public abstract void disparar(PantallaJuego juego);
 	    

@@ -1,4 +1,5 @@
 package com.mygdx.game;
+import java.util.Scanner;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -52,6 +53,7 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<Cohete> misil1 = new ArrayList<>();
 	private  ArrayList<Cohete> misil2 = new ArrayList<>();
 
+	private MovimientoEstrategia estrategia;
 	
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo,int velXCohete ,int velYCohete, int cantMisil, int cantAsteroides, boolean escudoA, boolean coheteA) {
@@ -65,7 +67,7 @@ public class PantallaJuego implements Screen {
 		this.velYEscudo=velYEscudo;
 		this.cantEscudo=cantEscudo;
 		this.potenciador = new Potenciador();
-		
+		setStrategy();
 		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
@@ -138,6 +140,7 @@ public class PantallaJuego implements Screen {
 		game.getFont().draw(batch, "Score:"+this.score, Gdx.graphics.getWidth()-150, 30);
 		game.getFont().draw(batch, "HighScore:"+game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
 	}
+		
 	@Override
 	public void render(float delta) {
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -225,10 +228,10 @@ public class PantallaJuego implements Screen {
 	     for (Bullet b : balas) {       
 	          b.draw(batch);
 	      }
-	      nave.draw(batch, this);
+	      nave.draw(batch, this, estrategia);
 	      
 	      if(!naveEnem.estaDestruido()) {
-	    	  naveEnem.draw(batch, this);
+	    	  naveEnem.draw(batch, this, estrategia);
 	      }
 	      //dibujar asteroides y manejar colision con nave
 	      for (int i = 0; i < balls1.size(); i++) {
@@ -269,6 +272,34 @@ public class PantallaJuego implements Screen {
 	      }
 	}
 	
+	public void setStrategy() {
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Selecciona una opción de comportamiento:");
+        System.out.println("1. Presionar teclas");
+        System.out.println("2. Mantener teclas presionadas");
+        System.out.println("3. Mantener teclas presionadas acelerado");
+
+        int opcion = scanner.nextInt();
+
+        switch (opcion) {
+            case 1:
+                estrategia = new MovimientoPresionado();
+                break;
+            case 2:
+            	estrategia = new MovimientoMantenido();
+                break;
+            case 3:
+            	estrategia = new MovimientoMantenidoAcelerado();
+                break;
+            default:
+                System.out.println("Opción no válida. Seleccionando comportamiento predeterminado.");
+                // Puedes asignar un comportamiento predeterminado aquí si lo deseas.
+                estrategia = new MovimientoMantenido();
+        }
+
+	}
     
     public boolean agregarBala(Bullet bb) {
     	return balas.add(bb);

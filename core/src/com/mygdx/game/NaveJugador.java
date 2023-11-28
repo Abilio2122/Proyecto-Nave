@@ -9,8 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
 public class NaveJugador extends NaveAbstract {
-    //private MovimientoEstrategia estrategia = new MovimientoPresionado();
-    private MovimientoEstrategia estrategia = new MovimientoMantenido();
 	private boolean escudoActivo = false;
 	private boolean tieneCohete = false;
 	private int disparosConCohete = 0;
@@ -29,12 +27,11 @@ public class NaveJugador extends NaveAbstract {
     	
     
     @Override
-    public void draw(SpriteBatch batch, PantallaJuego juego) {
+    public void draw(SpriteBatch batch, PantallaJuego juego, MovimientoEstrategia str) {
         float x = spr.getX();
         float y = spr.getY();
         if (!herido) {        	
-        	
-        	estrategia.procesarEntrada(x, y, xVel, yVel, spr);
+        	str.procesarEntrada(x, y, xVel, yVel, spr);
         	//moverse(x,y);
             
             disparar(juego);

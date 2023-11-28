@@ -22,7 +22,7 @@ public class NaveEnem extends NaveAbstract {
         xSpeed = 2.0f;
 	}
     @Override
-    public void draw(SpriteBatch batch, PantallaJuego juego) {
+    public void draw(SpriteBatch batch, PantallaJuego juego, MovimientoEstrategia estrategia) {
         float x = spr.getX();
         float y = spr.getY();
         if (!herido) {
