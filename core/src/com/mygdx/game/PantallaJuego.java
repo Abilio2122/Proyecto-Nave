@@ -54,7 +54,7 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<Cohete> misil2 = new ArrayList<>();
 
 	private MovimientoEstrategia estrategia;
-	
+	//fomprobacion
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo,int velXCohete ,int velYCohete, int cantMisil, int cantAsteroides, boolean escudoA, boolean coheteA) {
 		this.game = game;
