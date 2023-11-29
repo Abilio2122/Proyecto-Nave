@@ -33,20 +33,8 @@ public class NaveJugador extends NaveAbstract {
         float x = spr.getX();
         float y = spr.getY();
         if (!herido) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) xVel--;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) xVel++;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) yVel--;
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) yVel++;
-
-            if (x + xVel < 0 || x + xVel + spr.getWidth() > Gdx.graphics.getWidth())
-                xVel *= -1;
-            if (y + yVel < 0 || y + yVel + spr.getHeight() > Gdx.graphics.getHeight())
-                yVel *= -1;
-
-            spr.setPosition(x + xVel, y + yVel);
-            
+        	str.procesarEntrada(x, y, xVel, yVel, spr);
             disparar(juego);
-            
             spr.draw(batch);
         } else {
             spr.setX(spr.getX() + MathUtils.random(-2, 2));
@@ -57,7 +45,7 @@ public class NaveJugador extends NaveAbstract {
         }
         
     }
-
+    
     @Override
     public void disparar(PantallaJuego juego) {
     	if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -89,7 +77,7 @@ public class NaveJugador extends NaveAbstract {
 
     public boolean checkCollision(Ball2 b) {
         if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())) {
-        	
+        	/*
         	// cambia la direccion de movimiento por colision entre nave y ball2
             if (xVel == 0) xVel += b.getXSpeed() / 2;
             if (b.getXSpeed() == 0) b.setXSpeed(b.getXSpeed() + (int) xVel / 2);
@@ -102,7 +90,7 @@ public class NaveJugador extends NaveAbstract {
             if (b.getySpeed() == 0) b.setySpeed(b.getySpeed() + (int) yVel / 2);
             yVel = -yVel;
             b.setySpeed(-b.getySpeed());
-            
+            */
             //consecuencias de la nave
             if(tieneEscudoActivo()== false) {
             	vidas--;
@@ -124,6 +112,7 @@ public class NaveJugador extends NaveAbstract {
     public boolean checkCollisione(EscudoProtector e) {
         if(e.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote
+        	/*
             if (xVel ==0) xVel += e.getXSpeed()/2;
             if (e.getXSpeed() ==0) e.setXSpeed(e.getXSpeed() + (int)xVel/2);
             xVel = - xVel;
@@ -133,7 +122,7 @@ public class NaveJugador extends NaveAbstract {
             if (e.getySpeed() ==0) e.setySpeed(e.getySpeed() + (int)yVel/2);
             yVel = - yVel;
             e.setySpeed(- e.getySpeed());
-            
+            */
             aplicarEscudoProtector(e);
             spr.setTexture(texturaConEscudo);
             return true;
@@ -203,6 +192,7 @@ public class NaveJugador extends NaveAbstract {
     public boolean checkCollisione(Cohete l) {
         if(l.getArea().overlaps(spr.getBoundingRectangle())){
         	// rebote
+        	/*
             if (xVel ==0) xVel += l.getXSpeed()/2;
             if (l.getXSpeed() ==0) l.setXSpeed(l.getXSpeed() + (int)xVel/2);
             xVel = - xVel;
@@ -212,7 +202,7 @@ public class NaveJugador extends NaveAbstract {
             if (l.getySpeed() ==0) l.setySpeed(l.getySpeed() + (int)yVel/2);
             yVel = - yVel;
             l.setySpeed(- l.getySpeed());
-            
+            */
             activarPotenciador(l);
             spr.setTexture(texturaConCohete);
             return true;
