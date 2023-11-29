@@ -149,18 +149,9 @@ public class PantallaJuego implements Screen {
 		  
 	      if (!nave.estaHerido()) {
  // colisiones entre balas y asteroides y su destruccion  
-	    	  
-	    	  // parece se que las balas y los asteroides se ven en un arreglo horizontal que describen su movimiento posible
-	    	  
-	    	  //arreglo de balas
-	    	  
-	    	  Manager mm = new Manager(nave, explosionSound, herida, naveEnem);
+	    	  Manager mm = new Manager(nave,explosionSound,herida, naveEnem, balls1,balls2);
 	    	  mm.balasM(batch,balls1, balls2, balas);
 	    	  
-		      //actualizar movimiento de asteroides dentro del area
-		      /*for (Ball2 ball : balls1) {
-		          ball.update();
-		      }*/
 		      
 		      for (int i=0;i<escudo1.size();i++) {
 		    	  escudo1.get(i).update();
@@ -169,83 +160,33 @@ public class PantallaJuego implements Screen {
 		      for(int i = 0 ; i < misil1.size() ; i++) {
 		    	  misil1.get(i).update();
 		      }
-		      //interaccion bala con escudos
 		      
+		      //interaccion bala con escudos	      
 	    	  potenciador.interactuarBalasConEscudos(balas, escudo1, escudo2);
 	    	  potenciador.interactuarBalasConCohete(balas, misil1, misil2);
 		      
-		      //colisiones entre asteroides y sus rebotes  
-		     /* for (int i=0;i<balls1.size();i++) {
-		    	Ball2 ball1 = balls1.get(i);   
-		        for (int j=0;j<balls2.size();j++) {
-		          Ball2 ball2 = balls2.get(j); 
-		          if (i<j) {
-		        	  ball1.checkCollision(ball2);
-		     
-		          }
-		        }
-		      } */
-		      
 		      //Colision entre escudos ////
 		      potenciador.comprobarColisionEscudos(escudo1, escudo2);
-		      
-		      
+		     
 		    //Colision entre Cohetes   /**/
 		      potenciador.comprobarColisionCohetes(misil1, misil2);
-		     
 		      
-	      }
-	      
-	      //dibujar balas
-	      /*for (Bullet b : balas) {       
-          		b.draw(batch);
-      		}*/
+	      }      
 	      nave.draw(batch, this, estrategia);
 	      
 	      if(!naveEnem.estaDestruido()) {
 	    	  naveEnem.draw(batch, this, estrategia);
 	      }
-	      //dibujar asteroides y manejar colision con nave
-	      /*for (int i = 0; i < balls1.size(); i++) {
-  	    Ball2 b=balls1.get(i);
-  	    b.draw(batch);
-	          //perdió vida o game over
-            if (nave.checkCollision(b)) {
-	            //asteroide se destruye con el choque             
-          	 balls1.remove(i);
-          	 balls2.remove(i);
-          	 i--;
-        }   	  
-        }*/
 	      
 	      //nave choca con escudo  /////
 	      potenciador.comprobarColisionNaveConEscudos(batch,nave, escudo1, escudo2);
 	      
 	    //nave choca con cohete  /**/
-	      potenciador.comprobarColisionNaveConCohetes(batch,nave,misil1,misil2);
-	      
-	      
-	      /*if (nave.estaDestruido()) {
-			if (score > game.getHighScore())
-				game.setHighScore(score);
-	    	Screen ss = new PantallaGameOver(game);
-			ss.resize(1200, 800);
-			game.setScreen(ss);
-			dispose();
-		  }*/
+	      potenciador.comprobarColisionNaveConCohetes(batch,nave,misil1,misil2); 
 	      
 	      nave.verificarGameOver(game, score, balls1, ronda, velXAsteroides, velYAsteroides, velXEscudo, velYEscudo, cantEscudo, velXCohete, velYCohete, cantMisil, cantAsteroides);
 	      batch.end();
 	      
-	      //nivel completado
-	      /*//nivel completado
-	      if (balls1.size()==0) {
-			Screen ss = new PantallaJuego(game,ronda+1, nave.getVidas(), score, 
-					velXAsteroides+1, velYAsteroides+1,velXEscudo,velYEscudo,cantEscudo, velXCohete, velYCohete, cantMisil, cantAsteroides+2,nave.tieneEscudoActivo(), nave.tienePotenciadorCohete());
-			ss.resize(1200, 800);
-			game.setScreen(ss);
-			dispose();
-	      }*/
 	}
 	
 	public void setStrategy() {

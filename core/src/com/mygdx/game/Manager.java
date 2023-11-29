@@ -18,67 +18,60 @@ public class Manager {
     private Sound herida;
     private int score;
 
-    public Manager(NaveJugador nave, Sound explosionSound, Sound herida, NaveEnem naveEnem) {
+    public Manager(NaveJugador nave, Sound explosionSound, Sound herida, NaveEnem naveEnem, ArrayList<Ball2> balls1, ArrayList<Ball2> balls2) {
     	  this.nave = nave;
     	  this.naveEnem = naveEnem;
     	  this.explosionSound = explosionSound;
     	  this.herida = herida;
     	  this.balas = new ArrayList<>();
+    	  this.balls1 = balls1;
+          this.balls2 = balls2;
     	  this.score = 0;
     }
     
     public void balasM(SpriteBatch batch,ArrayList<Ball2> balls1, ArrayList<Ball2> balls2, ArrayList<Bullet> balas) {
-    	for (int i = 0; i < balas.size(); i++) {
-            Bullet b = balas.get(i);
+    	Iterator<Bullet> iterator = balas.iterator();
+        while (iterator.hasNext()) {
+            Bullet b = iterator.next();
             b.update();
-            //arreglo de asteroides
-            for (int j = 0; j < balls1.size(); j++) {    
-              if (b.checkCollision(balls1.get(j))) {          
-            	 explosionSound.play();
-            	 balls1.remove(j);
-            	 balls2.remove(j);
-            	 j--;
-            	 score +=10;
-              }
-  	        }
-            
-          //manejo de colision con nave
-            if(b.checkCollisionNave(nave)) {
-            	 herida.play();   // no se por que no suena
-            }
-            
-          //manejo de colision con nave enemiga
-            if(b.checkCollisionNave(naveEnem)) {
-            	 herida.play();   // no se por que no suena
+
+            // Comprobar colisión con asteroides
+            Iterator<Ball2> asteroidIterator = balls1.iterator();
+            while (asteroidIterator.hasNext()) {
+                Ball2 asteroid = asteroidIterator.next();
+                if (b.checkCollision(asteroid)) {
+                    explosionSound.play();
+                    asteroidIterator.remove();
+                    balls2.remove(asteroid);
+                    iterator.remove();
+                    score += 10;
+                }
             }
 
-            
-            b.draw(batch);
-            if (b.isDestroyed()) {
-                balas.remove(b);
-                i--; //para no saltarse 1 tras eliminar del arraylist
+            // Comprobar colisión con nave
+            if (b.checkCollisionNave(nave)) {
+                herida.play();
+                iterator.remove();
             }
-            
-            for (Ball2 ball : balls1) {
-		          ball.update();
-		      }
-            
-            for (int k=0;k<balls1.size();k++) {
-		    	Ball2 ball1 = balls1.get(k);   
-		        for (int j=0;j<balls2.size();j++) {
-		          Ball2 ball2 = balls2.get(j); 
-		          if (k<j) {
-		        	  ball1.checkCollision(ball2);
-		     
-		          }
-		        }
-		    }
-    	}
-    	 for (Bullet b : balas) {       
- 	          b.draw(batch);
- 	      }
- 	      
- 	     nave.manejarColisionesA(batch, balls1, balls2, balas);
+
+            // Comprobar colisión con nave enemiga
+            if (b.checkCollisionNave(naveEnem)) {
+                herida.play();
+                iterator.remove();
+            }
+
+            b.draw(batch);
+        }
+
+        // Actualizar posiciones de asteroides
+        for (Ball2 asteroid : balls1) {
+            asteroid.update();
+        }
+
+        // Manejar colisiones de nave
+        nave.manejarColisionesA(batch, balls1, balls2, balas);
+
+     
     }
 
 }
