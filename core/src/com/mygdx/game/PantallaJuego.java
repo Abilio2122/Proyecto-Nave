@@ -1,6 +1,4 @@
 package com.mygdx.game;
-import java.util.Scanner;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,6 +52,7 @@ public class PantallaJuego implements Screen {
 	private  ArrayList<Cohete> misil2 = new ArrayList<>();
 
 	private MovimientoEstrategia estrategia;
+
 	//fomprobacion
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo,int velXCohete ,int velYCohete, int cantMisil, int cantAsteroides, boolean escudoA, boolean coheteA) {
@@ -188,7 +187,7 @@ public class PantallaJuego implements Screen {
 	      batch.end();
 	      
 	}
-	
+	/*
 	public void setStrategy() {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
@@ -217,7 +216,14 @@ public class PantallaJuego implements Screen {
         }
 
 	}
-    
+    */
+	
+	public void setStrategy() { 
+        MovimientoEstrategiaManager manager = MovimientoEstrategiaManager.getInstance();
+        estrategia = manager.getEstrategia();
+    }
+
+	
     public boolean agregarBala(Bullet bb) {
     	return balas.add(bb);
     }
