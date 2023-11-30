@@ -10,8 +10,9 @@ public class Potenciador {
 	
 	public void usarPowerUps(NaveJugador nave,boolean escudoA,boolean coheteA) {
         // Crea instancias de EscudoProtector y Cohete
-        EscudoProtector escudo = new EscudoProtector(0, 0, 0, 0, 0, new Texture(Gdx.files.internal("escudo.png"))); 
-        Cohete cohete = new Cohete(0, 0, 0, 0, 0, new Texture(Gdx.files.internal("Misil.png"))) ;
+		PowerUp escudo = new EscudoProtector(0, 0, 0, 0, 0, new Texture(Gdx.files.internal("escudo.png")));
+	    PowerUp cohete = new Cohete(0, 0, 0, 0, 0, new Texture(Gdx.files.internal("Misil.png")));
+
 
         // Aplica los power-ups a la nave
 	    if(escudoA) {
@@ -27,7 +28,7 @@ public class Potenciador {
     public void generarCohetes(ArrayList<Cohete> Misil1, ArrayList<Cohete> Misil2, int cantMisil, int velXCohete, int velYCohete){
         Random q = new Random();
         for (int i = 0; i < cantMisil; i++) {
-            Cohete cohete = new Cohete(q.nextInt((int)Gdx.graphics.getWidth()),
+            Cohete cohete = new instanciación(q.nextInt((int)Gdx.graphics.getWidth()),
                     150 + q.nextInt((int)Gdx.graphics.getHeight() - 80),
                     50 + q.nextInt(10), velXCohete + q.nextInt(4), velYCohete + q.nextInt(4),
                     new Texture(Gdx.files.internal("Misil.png")));
@@ -80,6 +81,8 @@ public class Potenciador {
             }
         }
     }
+    
+    
     
 /*ESCUDO*/
     public void generarEscudos(ArrayList<EscudoProtector> escudo1, ArrayList<EscudoProtector> escudo2, int cantEscudo, int velXEscudo, int velYEscudo) {

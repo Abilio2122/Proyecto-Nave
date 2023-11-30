@@ -53,7 +53,6 @@ public class PantallaJuego implements Screen {
 
 	private MovimientoEstrategia estrategia;
 
-	//fomprobacion
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score,  
 			int velXAsteroides, int velYAsteroides,int velXEscudo, int velYEscudo,int cantEscudo,int velXCohete ,int velYCohete, int cantMisil, int cantAsteroides, boolean escudoA, boolean coheteA) {
 		this.game = game;
@@ -187,37 +186,7 @@ public class PantallaJuego implements Screen {
 	      batch.end();
 	      
 	}
-	/*
-	public void setStrategy() {
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Selecciona una opción de comportamiento:");
-        System.out.println("1. Presionar teclas");
-        System.out.println("2. Mantener teclas presionadas");
-        System.out.println("3. Mantener teclas presionadas acelerado");
-
-        int opcion = scanner.nextInt();
-
-        switch (opcion) {
-            case 1:
-                estrategia = new MovimientoPresionado();
-                break;
-            case 2:
-            	estrategia = new MovimientoMantenido();
-                break;
-            case 3:
-            	estrategia = new MovimientoMantenidoAcelerado();
-                break;
-            default:
-                System.out.println("Opción no válida. Seleccionando comportamiento predeterminado.");
-                // Puedes asignar un comportamiento predeterminado aquí si lo deseas.
-                estrategia = new MovimientoMantenido();
-        }
-
-	}
-    */
-	
 	public void setStrategy() { 
         MovimientoEstrategiaManager manager = MovimientoEstrategiaManager.getInstance();
         estrategia = manager.getEstrategia();

@@ -6,33 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class EscudoProtector implements PowerUp {
-	private int x;
-    private int y;
-    private int xSpeed;
-    private int ySpeed;
-    private Sprite spr;
+public class EscudoProtector extends PowerUp {
     private boolean activo;
-    
+
     public void apply(NaveJugador nave) {
         nave.aplicarEscudoProtector(this);
     	nave.setNaveTexturaConEscudo();
-    }
-    public EscudoProtector(int x, int y, int size, int xSpeed, int ySpeed, Texture tx) {
-    	spr = new Sprite(tx);
-    	this.x = x; 
-        
-    	if (x-size < 0) this.x = x+size;
-    	if (x+size > Gdx.graphics.getWidth())this.x = x-size;
-         
-        this.y = y;
-        
-    	if (y-size < 0) this.y = y+size;
-    	if (y+size > Gdx.graphics.getHeight())this.y = y-size;
-    	
-        spr.setPosition(x, y);
-        this.setXSpeed(xSpeed);
-        this.setySpeed(ySpeed);
     }
 
     public void draw(SpriteBatch batch) {
@@ -52,7 +31,8 @@ public class EscudoProtector implements PowerUp {
         spr.setPosition(x, y);
 	}
 	
-    public void checkCollision(EscudoProtector b2) {
+	//rebota entre escudos
+    public void checkCollision(PowerUp b2) {
         if(spr.getBoundingRectangle().overlaps(b2.spr.getBoundingRectangle())){
         	// rebote
             if (getXSpeed() ==0) setXSpeed(getXSpeed() + b2.getXSpeed()/2);
@@ -90,16 +70,14 @@ public class EscudoProtector implements PowerUp {
 	public Rectangle getArea() {
 		return spr.getBoundingRectangle();
 	}
-	@Override
-	public void draw(SpriteBatch batch, PantallaJuego juego) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void checkCollision(Cohete b2) {
-		// TODO Auto-generated method stub
-		
-	}
+
+
+
+
+
+
+
+
 
     
     

@@ -74,23 +74,48 @@ public class NaveJugador extends NaveAbstract {
             }
         }
     }
+    
+  
+    //recibe cohete
+    public boolean checkCollisione(Cohete l) {
+        if(l.getArea().overlaps(spr.getBoundingRectangle())){
+            activarPotenciador(l);
+            spr.setTexture(texturaConCohete);
+            return true;
+        }
+        return false;
+    }
+    
+    // recibe escudo
+    public boolean checkCollisione(EscudoProtector e) {
+        if(e.getArea().overlaps(spr.getBoundingRectangle())){
+            aplicarEscudoProtector(e);
+            spr.setTexture(texturaConEscudo);
+            return true;
+        }
+        
+        return false;
+    }
+    
+    //manejo colision con asteroides
+    public void manejarColisionesA(SpriteBatch batch,ArrayList<Ball2> balls1, ArrayList<Ball2> balls2, ArrayList<Bullet> balas) {
+        for (int i = 0; i < balls1.size(); i++) {
+            Ball2 b = balls1.get(i);
+            b.draw(batch);
 
+            // Perdió vida o game over
+            if (checkCollision(b)) {
+                // Asteroide se destruye con el choque
+                balls1.remove(i);
+                balls2.remove(i);
+                i--;
+            }
+        }
+    }
+    
+  //colision con asteroides (parte de manejo de colisiones de asteroides)
     public boolean checkCollision(Ball2 b) {
         if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())) {
-        	/*
-        	// cambia la direccion de movimiento por colision entre nave y ball2
-            if (xVel == 0) xVel += b.getXSpeed() / 2;
-            if (b.getXSpeed() == 0) b.setXSpeed(b.getXSpeed() + (int) xVel / 2);
-            //se invierten las direcciones entre ambos
-            xVel = -xVel;
-            b.setXSpeed(-b.getXSpeed());
-            
-            //lo mismo pero en vertical
-            if (yVel == 0) yVel += b.getySpeed() / 2;
-            if (b.getySpeed() == 0) b.setySpeed(b.getySpeed() + (int) yVel / 2);
-            yVel = -yVel;
-            b.setySpeed(-b.getySpeed());
-            */
             //consecuencias de la nave
             if(tieneEscudoActivo()== false) {
             	vidas--;
@@ -109,42 +134,6 @@ public class NaveJugador extends NaveAbstract {
         return false;
     }
     
-    public boolean checkCollisione(EscudoProtector e) {
-        if(e.getArea().overlaps(spr.getBoundingRectangle())){
-        	// rebote
-        	/*
-            if (xVel ==0) xVel += e.getXSpeed()/2;
-            if (e.getXSpeed() ==0) e.setXSpeed(e.getXSpeed() + (int)xVel/2);
-            xVel = - xVel;
-            e.setXSpeed(-e.getXSpeed());
-            
-            if (yVel ==0) yVel += e.getySpeed()/2;
-            if (e.getySpeed() ==0) e.setySpeed(e.getySpeed() + (int)yVel/2);
-            yVel = - yVel;
-            e.setySpeed(- e.getySpeed());
-            */
-            aplicarEscudoProtector(e);
-            spr.setTexture(texturaConEscudo);
-            return true;
-        }
-        
-        return false;
-    }
-    
-    public void manejarColisionesA(SpriteBatch batch,ArrayList<Ball2> balls1, ArrayList<Ball2> balls2, ArrayList<Bullet> balas) {
-        for (int i = 0; i < balls1.size(); i++) {
-            Ball2 b = balls1.get(i);
-            b.draw(batch);
-
-            // Perdió vida o game over
-            if (checkCollision(b)) {
-                // Asteroide se destruye con el choque
-                balls1.remove(i);
-                balls2.remove(i);
-                i--;
-            }
-        }
-    }
    
     public void verificarGameOver(SpaceNavigation game, int score, ArrayList<Ball2> balls1, int ronda, int velXAsteroides, int velYAsteroides, int velXEscudo, int velYEscudo, int cantEscudo, int velXCohete, int velYCohete, int cantMisil, int cantAsteroides) {
         if (estaDestruido()) {
@@ -185,29 +174,6 @@ public class NaveJugador extends NaveAbstract {
     
     public void setNaveTexturaConEscudo() {
         spr.setTexture(texturaConEscudo);
-    }
-    
-    
-    
-    public boolean checkCollisione(Cohete l) {
-        if(l.getArea().overlaps(spr.getBoundingRectangle())){
-        	// rebote
-        	/*
-            if (xVel ==0) xVel += l.getXSpeed()/2;
-            if (l.getXSpeed() ==0) l.setXSpeed(l.getXSpeed() + (int)xVel/2);
-            xVel = - xVel;
-            l.setXSpeed(-l.getXSpeed());
-            
-            if (yVel ==0) yVel += l.getySpeed()/2;
-            if (l.getySpeed() ==0) l.setySpeed(l.getySpeed() + (int)yVel/2);
-            yVel = - yVel;
-            l.setySpeed(- l.getySpeed());
-            */
-            activarPotenciador(l);
-            spr.setTexture(texturaConCohete);
-            return true;
-        }
-        return false;
     }
     
 
