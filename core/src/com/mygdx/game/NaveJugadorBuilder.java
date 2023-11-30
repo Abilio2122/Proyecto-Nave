@@ -52,7 +52,7 @@ public class NaveJugadorBuilder implements NaveBuilder {
 	@Override
 	public NaveAbstract getNave() {
 		// TODO Auto-generated method stub
-		return naveConstruida;
+		 return naveConstruida;
 	}
 
 }

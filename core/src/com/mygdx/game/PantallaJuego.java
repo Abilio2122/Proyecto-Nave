@@ -96,14 +96,9 @@ public class PantallaJuego implements Screen {
 	     naveBuilder.buildDisparoIntervalo(1.0f); 
 	     naveBuilder.buildNave();
 	     nave = (NaveJugador) naveBuilder.getNave();
-
-	    //Ve si tiene el escudo activo
-	    
-	    potenciador.usarPowerUps(nave, escudoA, coheteA); //Se usa aquí la interfaz
-	    
+  
         nave.setVidas(vidas);
         
-		
         NaveEnemBuilder naveEnemBuilder = new NaveEnemBuilder();
 		//crear NaveEnem
         naveEnemBuilder.buildPosicion(Gdx.graphics.getWidth()/2-50, 600);
@@ -119,6 +114,8 @@ public class PantallaJuego implements Screen {
         naveEnem = (NaveEnem) naveEnemBuilder.getNave();
         naveEnem.setVidas(1);
 		
+        potenciador.usarPowerUps(nave, escudoA, coheteA);
+        
         //crear asteroides
         Random r = new Random();
 	    for (int i = 0; i < cantAsteroides; i++) {
@@ -158,9 +155,7 @@ public class PantallaJuego implements Screen {
           batch.begin();
 		  dibujaEncabezado();
 		  
-	      if (!nave.estaHerido()) {
- // colisiones entre balas y asteroides y su destruccion  
-	    	 
+	      if (!nave.estaHerido()) { 
 	    	  mm.balasM(batch,balls1, balls2, balas);
 	    	  
 		      
@@ -245,8 +240,6 @@ public class PantallaJuego implements Screen {
 		// TODO Auto-generated method stub
 		this.explosionSound.dispose();
 		this.gameMusic.dispose();
-		
-		
 	}
 	
 }

@@ -41,7 +41,7 @@ public class Potenciador {
         for(int i = 0 ; i < misil1.size() ; i++) {
             Cohete m1 = misil1.get(i);
             for(int j = 0 ; j < misil2.size() ; j++) {
-                Cohete m2 = misil2.get(i);
+                Cohete m2 = misil2.get(j);
                 if(i<j) {
                     m1.checkCollision(m2);
                 }

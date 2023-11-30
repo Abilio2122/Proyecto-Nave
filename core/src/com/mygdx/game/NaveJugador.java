@@ -211,6 +211,7 @@ public class NaveJugador extends NaveAbstract {
     
     public void desactivarCohete() {
     	tieneCohete = false;
+    	disparosConCohete = 0;
     }
     
     public void setDisparoIntervalo(float disparoIntervalo) {
