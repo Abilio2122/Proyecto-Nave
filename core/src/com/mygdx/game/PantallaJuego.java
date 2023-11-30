@@ -42,6 +42,8 @@ public class PantallaJuego implements Screen {
 	private Cohete j;
 	boolean coheteA;
 	
+	private Texture texture;
+	
 	private  ArrayList<Ball2> balls1 = new ArrayList<>();// Hay 2 arrayList para manejar las coliciones 
 	private  ArrayList<Ball2> balls2 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
@@ -72,6 +74,7 @@ public class PantallaJuego implements Screen {
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
 		camera.setToOrtho(false, 800, 640);
+		texture = new Texture(Gdx.files.internal("fondo.jpg"));
 		
 		//inicializar assets; musica de fondo y efectos de sonido
 		explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
@@ -153,6 +156,7 @@ public class PantallaJuego implements Screen {
 	public void render(float delta) {
 		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
           batch.begin();
+          game.getBatch().draw(texture, 0, 0, texture.getWidth(), texture.getHeight());
 		  dibujaEncabezado();
 		  
 	      if (!nave.estaHerido()) { 
@@ -179,7 +183,7 @@ public class PantallaJuego implements Screen {
 		      
 	      }      
 	      nave.draw(batch, this, estrategia);
-	      
+	     
 	      if(!naveEnem.estaDestruido()) {
 	    	  naveEnem.draw(batch, this, estrategia);
 	      }
@@ -189,9 +193,9 @@ public class PantallaJuego implements Screen {
 	      
 	    //nave choca con cohete  /**/
 	      potenciador.comprobarColisionNaveConCohetes(batch,nave,misil1,misil2); 
-	      
-	      nave.verificarGameOver(game, score, balls1, ronda, velXAsteroides, velYAsteroides, velXEscudo, velYEscudo, cantEscudo, velXCohete, velYCohete, cantMisil, cantAsteroides);
 	      batch.end();
+	      nave.verificarGameOver(game, score, balls1, ronda, velXAsteroides, velYAsteroides, velXEscudo, velYEscudo, cantEscudo, velXCohete, velYCohete, cantMisil, cantAsteroides);
+	      
 	      
 	}
 

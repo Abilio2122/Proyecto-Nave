@@ -157,6 +157,7 @@ public class NaveJugador extends NaveAbstract {
                     tieneEscudoActivo(), tienePotenciadorCohete());
             pantallaJuego.resize(1200, 800);
             game.setScreen(pantallaJuego);
+            dispose();
             
         }
     }
@@ -225,5 +226,10 @@ public class NaveJugador extends NaveAbstract {
     public Sprite getSprite() {
         return sprite;
     }
-
+    
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
+   
 }
