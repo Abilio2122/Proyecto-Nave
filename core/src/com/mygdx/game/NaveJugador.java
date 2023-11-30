@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -104,7 +105,7 @@ public class NaveJugador extends NaveAbstract {
             b.draw(batch);
 
             // Perdió vida o game over
-            if (checkCollision(b)) {
+            if (checkCollisionNave(b)) {
                 // Asteroide se destruye con el choque
                 balls1.remove(i);
                 balls2.remove(i);
@@ -143,7 +144,7 @@ public class NaveJugador extends NaveAbstract {
             PantallaGameOver pantallaGameOver = new PantallaGameOver(game);
             pantallaGameOver.resize(1200, 800);
             game.setScreen(pantallaGameOver);
-            // Aquí deberías manejar la disposición de recursos si es necesario
+            
         }
         
 
@@ -155,10 +156,31 @@ public class NaveJugador extends NaveAbstract {
                     tieneEscudoActivo(), tienePotenciadorCohete());
             pantallaJuego.resize(1200, 800);
             game.setScreen(pantallaJuego);
-            // Aquí deberías manejar la disposición de recursos si es necesario
+            
         }
     }
     
+    
+    
+    public boolean checkCollisionNave(Ball2 b) {
+        if (!herido && b.getArea().overlaps(spr.getBoundingRectangle())) {
+            //consecuencias de la nave
+            if(tieneEscudoActivo()== false) {
+                vidas--;
+                herido = true;
+                tiempoHerido = tiempoHeridoMax;
+                sonidoHerido.play();
+            } else {
+                desactivarEscudo();
+                spr.setTexture(texturaSinEscudo);
+            }
+            if (vidas <= 0)
+                destruida = true;
+            return true;
+        }
+
+        return false;
+    }
 	
     public void desactivarEscudo() {
         escudoActivo = false;

@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class PantallaJuego implements Screen {
 
 	private SpaceNavigation game;
+	private Manager mm;
 	private OrthographicCamera camera;	
 	private SpriteBatch batch;
 	private Sound explosionSound;
@@ -67,6 +68,7 @@ public class PantallaJuego implements Screen {
 		this.potenciador = new Potenciador();
 		setStrategy();
 		
+		
 		batch = game.getBatch();
 		camera = new OrthographicCamera();	
 		camera.setToOrtho(false, 800, 640);
@@ -78,11 +80,10 @@ public class PantallaJuego implements Screen {
 		herida = Gdx.audio.newSound(Gdx.files.internal("ay.mp3"));
 		herida.setVolume(1,0.25f);
 		
-		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("noMeConoce.wav")); //
-		
+		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("noMeConoce.wav"));
 		gameMusic.setLooping(true);
 		gameMusic.setVolume(0.75f);
-		gameMusic.play();
+		gameMusic.play();;
 		
 		
 		
@@ -125,6 +126,8 @@ public class PantallaJuego implements Screen {
 	    
 	  //Crear Cohetes  
 	    potenciador.generarCohetes(misil1, misil2, cantMisil, velXCohete, velYCohete);
+	    
+	    mm = new Manager(nave,explosionSound,herida, naveEnem, balls1,balls2,balas);
 	}
     
 	public void dibujaEncabezado() {
@@ -147,7 +150,7 @@ public class PantallaJuego implements Screen {
 		  
 	      if (!nave.estaHerido()) {
  // colisiones entre balas y asteroides y su destruccion  
-	    	  Manager mm = new Manager(nave,explosionSound,herida, naveEnem, balls1,balls2);
+	    	 
 	    	  mm.balasM(batch,balls1, balls2, balas);
 	    	  
 		      
@@ -232,6 +235,8 @@ public class PantallaJuego implements Screen {
 		// TODO Auto-generated method stub
 		this.explosionSound.dispose();
 		this.gameMusic.dispose();
+		
+		
 	}
 	
 }
