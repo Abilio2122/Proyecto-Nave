@@ -89,7 +89,7 @@ public class NaveJugador extends NaveAbstract {
     // recibe escudo
     public boolean checkCollisione(EscudoProtector e) {
         if(e.getArea().overlaps(spr.getBoundingRectangle())){
-            aplicarEscudoProtector(e);
+        	activarPotenciador(e);
             spr.setTexture(texturaConEscudo);
             return true;
         }
@@ -159,10 +159,6 @@ public class NaveJugador extends NaveAbstract {
         }
     }
     
-	public void aplicarEscudoProtector(EscudoProtector escudoProtector) {
-		escudoActivo = true;
-		
-	}
 	
     public void desactivarEscudo() {
         escudoActivo = false;
@@ -176,10 +172,15 @@ public class NaveJugador extends NaveAbstract {
         spr.setTexture(texturaConEscudo);
     }
     
-
+    //sobrecarga de metodos 
     public void activarPotenciador(Cohete cohete) {
         tieneCohete = true;
     }
+    
+    public void activarPotenciador(EscudoProtector escudoProtector) {
+		escudoActivo = true;
+		
+	}
     
     public boolean tienePotenciadorCohete() {
         return tieneCohete;

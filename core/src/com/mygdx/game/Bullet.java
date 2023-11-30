@@ -97,7 +97,7 @@ public class Bullet {
 	            this.destroyed = true;
 	            
 	         // Aplicar el efecto del EscudoProtector en la nave
-	            Nave.aplicarEscudoProtector(b2);
+	            Nave.activarPotenciador(b2);
 	            
 	            
 	            // Cambiar la textura de la nave a la versión con escudo
