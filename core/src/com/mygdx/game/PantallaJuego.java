@@ -83,18 +83,20 @@ public class PantallaJuego implements Screen {
 		gameMusic = Gdx.audio.newMusic(Gdx.files.internal("noMeConoce.wav"));
 		gameMusic.setLooping(true);
 		gameMusic.setVolume(0.75f);
-		gameMusic.play();;
+		gameMusic.play();
 		
 		
-		
+		NaveJugadorBuilder naveBuilder = new NaveJugadorBuilder();
 	    // cargar imagen de la nave, 64x64   
-	    nave = new NaveJugador(Gdx.graphics.getWidth()/2-50,30,new Texture(Gdx.files.internal("MainShip3.png")),
-	    				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
-	    				new Texture(Gdx.files.internal("Rocket2.png")), 
-	    				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
-	    
-	    
-	    
+		 naveBuilder.buildPosicion(Gdx.graphics.getWidth() / 2 - 50, 30);
+	     naveBuilder.buildTextura(new Texture(Gdx.files.internal("MainShip3.png")));
+	     naveBuilder.buildSonidos(Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")),
+	    		 Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3")));
+	     naveBuilder.buildBalaTexture(new Texture(Gdx.files.internal("Rocket2.png")));
+	     naveBuilder.buildDisparoIntervalo(1.0f); 
+	     naveBuilder.buildNave();
+	     nave = (NaveJugador) naveBuilder.getNave();
+
 	    //Ve si tiene el escudo activo
 	    
 	    potenciador.usarPowerUps(nave, escudoA, coheteA); //Se usa aquí la interfaz
@@ -102,12 +104,20 @@ public class PantallaJuego implements Screen {
         nave.setVidas(vidas);
         
 		
+        NaveEnemBuilder naveEnemBuilder = new NaveEnemBuilder();
 		//crear NaveEnem
-		naveEnem = new NaveEnem(Gdx.graphics.getWidth()/2-50,600,new Texture(Gdx.files.internal("NaveMala.png")),
-				Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")), 
-				new Texture(Gdx.files.internal("Rocket2.png")), 
-				Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))); 
-		naveEnem.setVidas(1);
+        naveEnemBuilder.buildPosicion(Gdx.graphics.getWidth()/2-50, 600);
+        naveEnemBuilder.buildTextura(new Texture(Gdx.files.internal("NaveMala.png")));
+        naveEnemBuilder.buildSonidos(
+            Gdx.audio.newSound(Gdx.files.internal("hurt.ogg")),
+            Gdx.audio.newSound(Gdx.files.internal("pop-sound.mp3"))
+        );
+        naveEnemBuilder.buildBalaTexture(new Texture(Gdx.files.internal("Rocket2.png")));
+        naveEnemBuilder.buildDisparoIntervalo(0.5f); 
+        naveEnemBuilder.buildNave();
+
+        naveEnem = (NaveEnem) naveEnemBuilder.getNave();
+        naveEnem.setVidas(1);
 		
         //crear asteroides
         Random r = new Random();

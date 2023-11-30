@@ -81,5 +81,8 @@ public class NaveEnem extends NaveAbstract {
 		this.viva=viva;
 	}
     
+	public void setDisparoIntervalo(float disparoIntervalo) {
+        this.disparoIntervalo = disparoIntervalo;
+    }
 
 }

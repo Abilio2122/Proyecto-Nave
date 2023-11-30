@@ -17,6 +17,7 @@ public class NaveJugador extends NaveAbstract {
 	private boolean tieneCohete = false;
 	private int disparosConCohete = 0;
 	private Sprite sprite;
+	private float disparoIntervalo;
 
 	private Texture texturaSinEscudo = new Texture(Gdx.files.internal("MainShip3.png"));
 	private Texture texturaConEscudo = new Texture(Gdx.files.internal("MainShip4.png"));
@@ -210,6 +211,10 @@ public class NaveJugador extends NaveAbstract {
     
     public void desactivarCohete() {
     	tieneCohete = false;
+    }
+    
+    public void setDisparoIntervalo(float disparoIntervalo) {
+        this.disparoIntervalo = disparoIntervalo;
     }
     
     public void setNaveTexturaConCohete() {
