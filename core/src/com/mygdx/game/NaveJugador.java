@@ -137,7 +137,7 @@ public class NaveJugador extends NaveAbstract {
     }
     
    
-    public void verificarGameOver(SpaceNavigation game, int score, ArrayList<Ball2> balls1, int ronda, int velXAsteroides, int velYAsteroides, int velXEscudo, int velYEscudo, int cantEscudo, int velXCohete, int velYCohete, int cantMisil, int cantAsteroides) {
+    public void verificarGameOver(SpaceNavigation game, int score, ArrayList<Ball2> balls1, int ronda, int velXAsteroides, int velYAsteroides, int velXEscudo, int velYEscudo, int cantEscudo, int velXCohete, int velYCohete, int cantMisil, int cantAsteroides, Music gameMusic) {
         if (estaDestruido()) {
             if (score > game.getHighScore()) {
                 game.setHighScore(score);
@@ -157,7 +157,7 @@ public class NaveJugador extends NaveAbstract {
                     tieneEscudoActivo(), tienePotenciadorCohete());
             pantallaJuego.resize(1200, 800);
             game.setScreen(pantallaJuego);
-            dispose();
+            gameMusic.dispose();
             
         }
     }
@@ -227,9 +227,5 @@ public class NaveJugador extends NaveAbstract {
         return sprite;
     }
     
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
    
 }

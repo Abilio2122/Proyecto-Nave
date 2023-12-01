@@ -194,7 +194,7 @@ public class PantallaJuego implements Screen {
 	    //nave choca con cohete  /**/
 	      potenciador.comprobarColisionNaveConCohetes(batch,nave,misil1,misil2); 
 	      batch.end();
-	      nave.verificarGameOver(game, score, balls1, ronda, velXAsteroides, velYAsteroides, velXEscudo, velYEscudo, cantEscudo, velXCohete, velYCohete, cantMisil, cantAsteroides);
+	      nave.verificarGameOver(game, score, balls1, ronda, velXAsteroides, velYAsteroides, velXEscudo, velYEscudo, cantEscudo, velXCohete, velYCohete, cantMisil, cantAsteroides, gameMusic);
 	      
 	      
 	}
